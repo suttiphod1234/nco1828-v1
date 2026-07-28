@@ -2271,15 +2271,24 @@
 
     if (!container) return;
 
-    let filtered = globalRegistrantsData.filter(item => {
-      let matchKw = true;
-      if (keyword) {
-        matchKw = (item.fullName && item.fullName.toLowerCase().includes(keyword)) ||
-                  (item.phoneMasked && item.phoneMasked.toLowerCase().includes(keyword)) ||
-                  (item.packageSelected && item.packageSelected.toLowerCase().includes(keyword)) ||
-                  (item.mainShirtSize && item.mainShirtSize.toLowerCase().includes(keyword)) ||
-                  (item.memberStatus && item.memberStatus.toLowerCase().includes(keyword));
+    if (!keyword) {
+      container.innerHTML = `
+        <div style="text-align: center; padding: 40px 20px; color: var(--primary-gold);">
+          <i class="fa-solid fa-magnifying-glass fa-3x" style="margin-bottom: 15px; opacity: 0.8;"></i>
+          <h4 style="font-family:'Prompt'; font-size: 1.1rem; margin-bottom: 8px;">กรุณากรอกชื่อ-นามสกุล หรือเบอร์โทรศัพท์</h4>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">พิมพ์คำค้นหาในช่องด้านบน แล้วกดปุ่ม "ค้นหา" หรือกด Enter เพื่อตรวจสอบสถานะการลงทะเบียน</p>
+        </div>
+      `;
+      if (countElem) {
+        countElem.innerHTML = `<i class="fa-solid fa-circle-info"></i> กรุณากรอกคำค้นหาชื่อ-นามสกุล หรือเบอร์โทรศัพท์`;
       }
+      return;
+    }
+
+    let filtered = globalRegistrantsData.filter(item => {
+      let matchKw = (item.fullName && item.fullName.toLowerCase().includes(keyword)) ||
+                    (item.phoneMasked && item.phoneMasked.toLowerCase().includes(keyword)) ||
+                    (item.email && item.email.toLowerCase().includes(keyword));
 
       let matchStatus = true;
       const pStatus = item.paymentStatus || '';
@@ -2295,7 +2304,11 @@
     });
 
     if (countElem) {
-      countElem.innerHTML = `<i class="fa-solid fa-list-check"></i> แสดง <strong>${filtered.length}</strong> รายการ (จากทั้งหมด ${globalRegistrantsData.length} รายการใน Google Sheets)`;
+      if (filtered.length > 0) {
+        countElem.innerHTML = `<i class="fa-solid fa-list-check"></i> พบ <strong>${filtered.length}</strong> รายการตามคำค้นหา "${keyword}"`;
+      } else {
+        countElem.innerHTML = `<i class="fa-solid fa-user-xmark"></i> ไม่พบข้อมูลผู้ลงทะเบียน`;
+      }
     }
 
     if (filtered.length > 0) {
@@ -2337,9 +2350,11 @@
       }).join('');
     } else {
       container.innerHTML = `
-        <div style="text-align: center; padding: 35px 20px; color: var(--text-muted);">
-          <i class="fa-regular fa-folder-open fa-2x"></i>
-          <p style="margin-top: 10px;">ไม่พบข้อมูลรายชื่อตามคำค้นหา/เงื่อนไขที่เลือก</p>
+        <div style="text-align: center; padding: 40px 20px; color: var(--accent-red);">
+          <i class="fa-solid fa-user-xmark fa-3x" style="margin-bottom: 15px; opacity: 0.8;"></i>
+          <h4 style="font-family:'Prompt'; font-size: 1.1rem; margin-bottom: 8px; color: #ef4444;">ไม่พบข้อมูลผู้ลงทะเบียน</h4>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 12px;">ไม่พบรายชื่อหรือเบอร์โทรศัพท์ "${keyword}" ในระบบลงทะเบียน</p>
+          <small style="color: var(--primary-gold); font-size: 0.85rem;">หากแน่ใจว่าลงทะเบียนแล้ว หรือมีข้อสงสัย ติดต่อคณะผู้จัดงาน โทร 089-208-1550 (ร.ต.วันชัย มีชาญ)</small>
         </div>
       `;
     }
@@ -2349,6 +2364,17 @@
   function searchRegistrations() {
     const keyword = document.getElementById("searchKeyword").value.trim();
     const container = document.getElementById("searchResultsContainer");
+    if (!container) return;
+
+    if (!keyword) {
+      container.innerHTML = `
+        <div style="text-align: center; padding: 25px 20px; color: var(--primary-gold); background: rgba(255,255,255,0.02); border: 1px dashed var(--border-color); border-radius: 12px;">
+          <i class="fa-solid fa-magnifying-glass fa-2x" style="margin-bottom: 8px;"></i>
+          <p style="font-family:'Prompt'; font-size: 0.95rem; margin: 0;">กรุณากรอกชื่อ-นามสกุล หรือเบอร์โทรศัพท์ในช่องค้นหาด้านบน</p>
+        </div>
+      `;
+      return;
+    }
 
     container.innerHTML = `<div style="text-align: center; padding: 20px; color: var(--primary-gold);"><i class="fa-solid fa-spinner fa-spin fa-2x"></i><p style="margin-top: 10px;">กำลังค้นหาข้อมูลจาก Google Sheets...</p></div>`;
 
@@ -2377,12 +2403,11 @@
           `).join('');
         } else {
           container.innerHTML = `
-            <div style="text-align: center; padding: 20px; color: var(--text-muted);">
-              <i class="fa-regular fa-folder-open fa-2x"></i>
-              <p style="margin-top: 10px;">ไม่พบข้อมูลรายชื่อที่ลงทะเบียนตามคำค้นหา</p>
-              <button type="button" class="btn-copy" style="margin-top: 10px; background: var(--gold-metallic); color: #000; font-weight: 700; border: none; padding: 8px 16px;" onclick="openRegistrantsModal('${keyword}')">
-                <i class="fa-solid fa-window-restore"></i> เปิดดูทั้งหมดแบบ Popup
-              </button>
+            <div style="text-align: center; padding: 25px 20px; color: var(--accent-red); background: rgba(239,68,68,0.05); border: 1px dashed rgba(239,68,68,0.3); border-radius: 12px;">
+              <i class="fa-solid fa-user-xmark fa-2x" style="margin-bottom: 8px;"></i>
+              <p style="font-family:'Prompt'; font-weight: 600; margin-bottom: 4px; color: #ef4444;">ไม่พบข้อมูลผู้ลงทะเบียน</p>
+              <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 8px;">ไม่พบรายชื่อหรือเบอร์โทรศัพท์ "${keyword}" ในระบบลงทะเบียน</p>
+              <small style="color: var(--primary-gold);">หากมีข้อสงสัย ติดต่อคณะผู้จัดงาน โทร 089-208-1550 (ร.ต.วันชัย มีชาญ)</small>
             </div>
           `;
         }
