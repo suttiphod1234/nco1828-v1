@@ -2273,14 +2273,15 @@
 
     if (!keyword) {
       container.innerHTML = `
-        <div style="text-align: center; padding: 40px 20px; color: var(--primary-gold);">
+        <div style="text-align: center; padding: 40px 20px; color: var(--primary-gold); background: rgba(255,255,255,0.01); border: 1px dashed rgba(212,175,55,0.3); border-radius: 14px;">
           <i class="fa-solid fa-magnifying-glass fa-3x" style="margin-bottom: 15px; opacity: 0.8;"></i>
-          <h4 style="font-family:'Prompt'; font-size: 1.1rem; margin-bottom: 8px;">กรุณากรอกชื่อ-นามสกุล หรือเบอร์โทรศัพท์</h4>
-          <p style="color: var(--text-muted); font-size: 0.9rem;">พิมพ์คำค้นหาในช่องด้านบน แล้วกดปุ่ม "ค้นหา" หรือกด Enter เพื่อตรวจสอบสถานะการลงทะเบียน</p>
+          <h4 style="font-family:'Prompt'; font-size: 1.15rem; margin-bottom: 8px;">กรุณากรอกชื่อ-นามสกุล หรือเบอร์โทรศัพท์</h4>
+          <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 6px;">ต้องระบุชื่อ-นามสกุล หรือเบอร์โทรศัพท์ในช่องค้นหาด้านบน เพื่อตรวจสอบสถานะการลงทะเบียน</p>
+          <small style="color: rgba(255,255,255,0.5); font-size: 0.82rem;">(พิมพ์คำค้นหาแล้วกดปุ่ม "ค้นหา" หรือกด Enter)</small>
         </div>
       `;
       if (countElem) {
-        countElem.innerHTML = `<i class="fa-solid fa-circle-info"></i> กรุณากรอกคำค้นหาชื่อ-นามสกุล หรือเบอร์โทรศัพท์`;
+        countElem.innerHTML = `<i class="fa-solid fa-triangle-exclamation" style="color: var(--primary-gold);"></i> กรุณากรอกชื่อ-นามสกุล หรือเบอร์โทรศัพท์เพื่อค้นหา`;
       }
       return;
     }
@@ -2307,7 +2308,7 @@
       if (filtered.length > 0) {
         countElem.innerHTML = `<i class="fa-solid fa-list-check"></i> พบ <strong>${filtered.length}</strong> รายการตามคำค้นหา "${keyword}"`;
       } else {
-        countElem.innerHTML = `<i class="fa-solid fa-user-xmark"></i> ไม่พบข้อมูลผู้ลงทะเบียน`;
+        countElem.innerHTML = `<i class="fa-solid fa-user-xmark" style="color:#ef4444;"></i> ไม่พบข้อมูลผู้ลงทะเบียน`;
       }
     }
 
@@ -2350,11 +2351,14 @@
       }).join('');
     } else {
       container.innerHTML = `
-        <div style="text-align: center; padding: 40px 20px; color: var(--accent-red);">
+        <div style="text-align: center; padding: 40px 20px; color: var(--accent-red); background: rgba(239,68,68,0.05); border: 1px dashed rgba(239,68,68,0.3); border-radius: 14px;">
           <i class="fa-solid fa-user-xmark fa-3x" style="margin-bottom: 15px; opacity: 0.8;"></i>
-          <h4 style="font-family:'Prompt'; font-size: 1.1rem; margin-bottom: 8px; color: #ef4444;">ไม่พบข้อมูลผู้ลงทะเบียน</h4>
-          <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 12px;">ไม่พบรายชื่อหรือเบอร์โทรศัพท์ "${keyword}" ในระบบลงทะเบียน</p>
-          <small style="color: var(--primary-gold); font-size: 0.85rem;">หากแน่ใจว่าลงทะเบียนแล้ว หรือมีข้อสงสัย ติดต่อคณะผู้จัดงาน โทร 089-208-1550 (ร.ต.วันชัย มีชาญ)</small>
+          <h4 style="font-family:'Prompt'; font-size: 1.15rem; margin-bottom: 8px; color: #ef4444;">ไม่พบข้อมูลผู้ลงทะเบียน</h4>
+          <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 12px;">
+            ไม่พบรายชื่อหรือเบอร์โทรศัพท์ "<strong>${keyword}</strong>" ในระบบฐานข้อมูลลงทะเบียน <br>
+            <span style="color: #ef4444; font-weight: 600;">(ไม่สามารถค้นหาหรือแสดงสถานะได้หากข้อมูลไม่ตรงกับที่ลงทะเบียนไว้)</span>
+          </p>
+          <small style="color: var(--primary-gold); font-size: 0.85rem;">หากแน่ใจว่าลงทะเบียนแล้ว หรือต้องการสอบถามเพิ่มเติม ติดต่อคณะผู้จัดงาน โทร 089-208-1550 (ร.ต.วันชัย มีชาญ)</small>
         </div>
       `;
     }
@@ -2370,7 +2374,8 @@
       container.innerHTML = `
         <div style="text-align: center; padding: 25px 20px; color: var(--primary-gold); background: rgba(255,255,255,0.02); border: 1px dashed var(--border-color); border-radius: 12px;">
           <i class="fa-solid fa-magnifying-glass fa-2x" style="margin-bottom: 8px;"></i>
-          <p style="font-family:'Prompt'; font-size: 0.95rem; margin: 0;">กรุณากรอกชื่อ-นามสกุล หรือเบอร์โทรศัพท์ในช่องค้นหาด้านบน</p>
+          <p style="font-family:'Prompt'; font-size: 0.95rem; margin: 0; font-weight: 600;">กรุณากรอกชื่อ-นามสกุล หรือเบอร์โทรศัพท์ในช่องค้นหาด้านบน</p>
+          <small style="color: var(--text-muted); display: block; margin-top: 4px;">ต้องระบุชื่อ-นามสกุล หรือเบอร์โทรศัพท์เพื่อตรวจสอบสถานะการลงทะเบียน</small>
         </div>
       `;
       return;
@@ -2405,9 +2410,11 @@
           container.innerHTML = `
             <div style="text-align: center; padding: 25px 20px; color: var(--accent-red); background: rgba(239,68,68,0.05); border: 1px dashed rgba(239,68,68,0.3); border-radius: 12px;">
               <i class="fa-solid fa-user-xmark fa-2x" style="margin-bottom: 8px;"></i>
-              <p style="font-family:'Prompt'; font-weight: 600; margin-bottom: 4px; color: #ef4444;">ไม่พบข้อมูลผู้ลงทะเบียน</p>
-              <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 8px;">ไม่พบรายชื่อหรือเบอร์โทรศัพท์ "${keyword}" ในระบบลงทะเบียน</p>
-              <small style="color: var(--primary-gold);">หากมีข้อสงสัย ติดต่อคณะผู้จัดงาน โทร 089-208-1550 (ร.ต.วันชัย มีชาญ)</small>
+              <p style="font-family:'Prompt'; font-weight: 600; margin-bottom: 4px; color: #ef4444;">ไม่พบข้อมูลผู้ลงทะเบียนในระบบ</p>
+              <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 8px;">
+                ไม่พบรายชื่อหรือเบอร์โทรศัพท์ "${keyword}" ไม่สามารถแสดงสถานะการลงทะเบียนได้
+              </p>
+              <small style="color: var(--primary-gold);">หากแน่ใจว่าลงทะเบียนแล้ว ติดต่อคณะผู้จัดงาน โทร 089-208-1550 (ร.ต.วันชัย มีชาญ)</small>
             </div>
           `;
         }
