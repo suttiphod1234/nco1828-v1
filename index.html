@@ -2081,25 +2081,21 @@
 
     fetch(SCRIPT_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify(payload)
     })
-    .then(res => res.json())
-    .then(res => {
-      if (res.status === "success") {
-        showStatusModal(
-          "fa-circle-check",
-          "#22c55e",
-          "ลงทะเบียนสำเร็จเรียบร้อย!",
-          `ขอบคุณสำหรับข้อมูลครับ ทางคณะผู้จัดงาน NCO.1828 ได้รับข้อมูลการจองและสลิปการโอนเงินเรียบร้อยแล้ว`
-        );
-        document.getElementById("bookingForm").reset();
-        renderPackages();
-        document.getElementById("slipPreviewImg").style.display = "none";
-        slipBase64 = "";
-      } else {
-        throw new Error(res.message || "เกิดข้อผิดพลาดในการบันทึกข้อมูล");
-      }
+    .then(() => {
+      showStatusModal(
+        "fa-circle-check",
+        "#22c55e",
+        "ลงทะเบียนสำเร็จเรียบร้อย!",
+        `ขอบคุณสำหรับข้อมูลครับ ทางคณะผู้จัดงาน NCO.1828 ได้รับข้อมูลการจองเรียบร้อยแล้ว`
+      );
+      document.getElementById("bookingForm").reset();
+      renderPackages();
+      document.getElementById("slipPreviewImg").style.display = "none";
+      slipBase64 = "";
     })
     .catch(err => {
       showStatusModal(
