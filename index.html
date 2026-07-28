@@ -2465,7 +2465,27 @@
 
     const typingId = showTypingIndicator();
 
-    // 1. Try Express backend endpoint (/api/chat)
+    // 1. Primary: Call Cloud Run AI POST API (https://ais-dev-fptd5pqg26e5nwsjqx67ka-760953218776.asia-east1.run.app/api/ai/chat)
+    try {
+      const response = await fetch("https://ais-dev-fptd5pqg26e5nwsjqx67ka-760953218776.asia-east1.run.app/api/ai/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: message, history: chatHistory.slice(0, -1) })
+      });
+      if (response.ok) {
+        const data = await response.json();
+        if (data.status === "success" && data.reply) {
+          removeTypingIndicator(typingId);
+          appendChatMessage("bot", data.reply);
+          chatHistory.push({ role: "model", content: data.reply });
+          return;
+        }
+      }
+    } catch (err) {
+      console.log("Cloud Run AI API fetch error, switching to fallback:", err);
+    }
+
+    // 2. Fallback: Try Local Express backend endpoint (/api/chat)
     try {
       const response = await fetch("/api/chat", {
         method: "POST",
@@ -2485,7 +2505,7 @@
       // Continue to next fallback
     }
 
-    // 2. Try Google Apps Script SCRIPT_URL API (action=chat)
+    // 3. Fallback: Try Google Apps Script SCRIPT_URL API (action=chat)
     if (typeof SCRIPT_URL === "string" && SCRIPT_URL.startsWith("http")) {
       try {
         const gasUrl = SCRIPT_URL + "?action=chat&message=" + encodeURIComponent(message);
@@ -2504,7 +2524,7 @@
       }
     }
 
-    // 3. Fallback to Built-in AI Studio Knowledge Engine
+    // 4. Fallback: Built-in AI Studio Knowledge Engine
     setTimeout(() => {
       removeTypingIndicator(typingId);
       const reply = getClientNCO1828AIReply(message);

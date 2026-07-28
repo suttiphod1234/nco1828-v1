@@ -288,6 +288,28 @@ function doPost(e) {
 }
 
 function getAIChatReply(msg) {
+  // 1. Try Cloud Run AI Chat POST API
+  try {
+    const cloudRunUrl = "https://ais-dev-fptd5pqg26e5nwsjqx67ka-760953218776.asia-east1.run.app/api/ai/chat";
+    const payload = { message: msg, history: [] };
+    const options = {
+      method: "post",
+      contentType: "application/json",
+      payload: JSON.stringify(payload),
+      muteHttpExceptions: true
+    };
+    const res = UrlFetchApp.fetch(cloudRunUrl, options);
+    if (res.getResponseCode() === 200) {
+      const json = JSON.parse(res.getContentText());
+      if (json.status === "success" && json.reply) {
+        return json.reply;
+      }
+    }
+  } catch (e) {
+    Logger.log("Cloud Run AI API Fetch Error: " + e.toString());
+  }
+
+  // 2. Fallback to Gemini Direct API Key
   const apiKey = PropertiesService.getScriptProperties().getProperty("GEMINI_API_KEY");
   if (apiKey) {
     try {
