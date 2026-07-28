@@ -1,0 +1,2536 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#0b1326">
+  <title>ลงทะเบียนงานเลี้ยงรุ่น NCO.1828 เหล่าทหารปืนใหญ่</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-gold: #d4af37;
+      --gold-gradient: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+      --gold-metallic: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+      --bg-dark: #0b1326;
+      --bg-card: rgba(18, 30, 58, 0.85);
+      --border-color: rgba(212, 175, 55, 0.3);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent-red: #ef4444;
+      --accent-green: #22c55e;
+      --shadow-gold: 0 10px 25px -5px rgba(212, 175, 55, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Sarabun', sans-serif;
+      background: radial-gradient(circle at top center, #1a2b4c 0%, #080d1a 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 20px 10px 90px 10px;
+    }
+
+    /* Mobile Bottom Navigation */
+    .mobile-bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 65px;
+      background: rgba(11, 19, 38, 0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 999;
+      box-shadow: 0 -5px 25px rgba(0,0,0,0.6);
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.72rem;
+      font-weight: 500;
+      gap: 4px;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      flex: 1;
+      height: 100%;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .nav-item i {
+      font-size: 1.25rem;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+
+    .nav-item.active, .nav-item:hover {
+      color: var(--primary-gold);
+    }
+
+    .nav-item.active i {
+      transform: translateY(-3px) scale(1.15);
+      color: var(--primary-gold);
+    }
+
+    .nav-item.active::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      width: 32px;
+      height: 3px;
+      background: var(--gold-metallic);
+      border-radius: 0 0 4px 4px;
+    }
+
+    /* Poster Image Gallery Styles */
+    .poster-banner-wrapper {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      margin-bottom: 20px;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .poster-banner-wrapper:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(212, 175, 55, 0.35);
+    }
+
+    .poster-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+
+    .poster-zoom-hint {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: rgba(11, 19, 38, 0.85);
+      border: 1px solid var(--primary-gold);
+      color: var(--primary-gold);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      backdrop-filter: blur(5px);
+      pointer-events: none;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Header Banner Section */
+    .header-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 25px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      margin-bottom: 25px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: var(--gold-metallic);
+    }
+
+    .badge-early {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: #fff;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+      100% { transform: scale(1); }
+    }
+
+    .header-title {
+      font-family: 'Prompt', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: var(--gold-metallic);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+
+    .header-subtitle {
+      font-size: 1.1rem;
+      color: #e2e8f0;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    .event-info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+      text-align: left;
+    }
+
+    .info-box {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 12px;
+      padding: 12px 15px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .info-box i {
+      font-size: 1.4rem;
+      color: var(--primary-gold);
+    }
+
+    .info-box div label {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .info-box div span {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* Benefits Pills */
+    .benefits-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .benefit-tag {
+      background: rgba(212, 175, 55, 0.15);
+      border: 1px solid var(--border-color);
+      color: #fce7f3;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .benefit-tag i {
+      color: var(--primary-gold);
+    }
+
+    /* Section Cards */
+    .form-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      backdrop-filter: blur(8px);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Prompt', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--primary-gold);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #e2e8f0;
+    }
+
+    .form-group label .required {
+      color: var(--accent-red);
+    }
+
+    .input-control, select, textarea {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      color: #fff;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: all 0.3s ease;
+    }
+
+    .input-control:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary-gold);
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+    }
+
+    /* Radio Card Options */
+    .radio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+    }
+
+    .radio-card {
+      position: relative;
+    }
+
+    .radio-card input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .radio-card-content {
+      display: flex;
+      flex-direction: column;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .radio-card input[type="radio"]:checked + .radio-card-content {
+      background: rgba(212, 175, 55, 0.15);
+      border-color: var(--primary-gold);
+      box-shadow: var(--shadow-gold);
+    }
+
+    .radio-title {
+      font-weight: 600;
+      color: #fff;
+      font-size: 0.95rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .radio-price {
+      color: var(--primary-gold);
+      font-family: 'Prompt', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .radio-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Size Chart Table & Modal Trigger */
+    .size-chart-btn {
+      background: transparent;
+      border: 1px dashed var(--primary-gold);
+      color: var(--primary-gold);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.2s;
+    }
+
+    .size-chart-btn:hover {
+      background: rgba(212, 175, 55, 0.1);
+    }
+
+    .shirt-size-grid {
+      display: grid;
+      grid-template-columns: repeat( auto-fill, minmax(80px, 1fr) );
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .size-btn {
+      position: relative;
+    }
+
+    .size-btn input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+    }
+
+    .size-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 5px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .size-btn input[type="radio"]:checked + .size-box {
+      background: var(--primary-gold);
+      color: #000;
+      font-weight: 700;
+      border-color: var(--primary-gold);
+    }
+
+    .size-name {
+      font-family: 'Prompt', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .size-chest {
+      font-size: 0.75rem;
+      opacity: 0.85;
+    }
+
+    /* Extra Shirt Item row */
+    .extra-shirt-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 10px;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 10px;
+      border-radius: 10px;
+    }
+
+    .btn-add-shirt {
+      background: rgba(34, 197, 94, 0.2);
+      border: 1px solid var(--accent-green);
+      color: var(--accent-green);
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.2s;
+    }
+
+    .btn-add-shirt:hover {
+      background: rgba(34, 197, 94, 0.3);
+    }
+
+    .btn-remove-shirt {
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid var(--accent-red);
+      color: var(--accent-red);
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Summary Card */
+    .summary-box {
+      background: linear-gradient(145deg, rgba(212, 175, 55, 0.1), rgba(15, 23, 42, 0.9));
+      border: 2px solid var(--primary-gold);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 25px;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+      font-size: 0.95rem;
+    }
+
+    .summary-row.total {
+      border-bottom: none;
+      padding-top: 15px;
+      margin-top: 5px;
+      font-family: 'Prompt', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--primary-gold);
+    }
+
+    /* Payment Box & PromptPay QR */
+    .payment-box {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+
+    .payment-tab-container {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .payment-tab-btn {
+      flex: 1;
+      padding: 11px 14px;
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      border-radius: 10px;
+      font-family: 'Prompt', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.25s ease;
+    }
+
+    .payment-tab-btn.active {
+      background: var(--gold-metallic);
+      color: #000;
+      border-color: var(--primary-gold);
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.35);
+    }
+
+    /* Filter Chips for Registrants Modal */
+    .filter-chip {
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      border-radius: 20px;
+      padding: 5px 13px;
+      font-size: 0.8rem;
+      font-family: 'Prompt', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-chip.active, .filter-chip:hover {
+      background: var(--gold-metallic);
+      color: #000;
+      border-color: var(--primary-gold);
+      font-weight: 600;
+      box-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+    }
+
+    .promptpay-card {
+      background: #ffffff;
+      color: #0f172a;
+      border-radius: 16px;
+      overflow: hidden;
+      max-width: 330px;
+      margin: 0 auto 15px auto;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      border: 2px solid var(--primary-gold);
+    }
+
+    .promptpay-header {
+      background: #003764; /* Official Thai PromptPay Blue */
+      color: #ffffff;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-family: 'Prompt', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: 0.5px;
+    }
+
+    .promptpay-body {
+      padding: 18px;
+      text-align: center;
+    }
+
+    .promptpay-amount-box {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 8px 14px;
+      margin-bottom: 12px;
+    }
+
+    .promptpay-amount-label {
+      font-size: 0.78rem;
+      color: #64748b;
+      margin-bottom: 2px;
+    }
+
+    .promptpay-amount-val {
+      font-family: 'Prompt', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #003764;
+    }
+
+    .promptpay-qr-wrapper {
+      background: #f8fafc;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      display: inline-block;
+      margin-bottom: 12px;
+      box-shadow: inset 0 0 8px rgba(0,0,0,0.05);
+    }
+
+    .promptpay-qr-img {
+      width: 200px;
+      height: 200px;
+      display: block;
+      margin: 0 auto;
+      object-fit: contain;
+    }
+
+    .promptpay-acc-info {
+      font-size: 0.88rem;
+      color: #334155;
+      line-height: 1.45;
+    }
+
+    .bank-logo {
+      width: 50px;
+      height: 50px;
+      background: #4e2a84; /* SCB Purple */
+      color: #fff;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .account-number {
+      font-family: 'Prompt', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-gold);
+      letter-spacing: 1px;
+      margin: 8px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn-copy {
+      background: rgba(212, 175, 55, 0.2);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      color: var(--primary-gold);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-copy:hover {
+      background: var(--primary-gold);
+      color: #000;
+    }
+
+    /* Submit Button */
+    .btn-submit {
+      width: 100%;
+      padding: 16px;
+      background: var(--gold-metallic);
+      border: none;
+      border-radius: 12px;
+      color: #000;
+      font-family: 'Prompt', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+      transition: all 0.3s ease;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 30px rgba(212, 175, 55, 0.4);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* Modal styling */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-content {
+      background: #0f172a;
+      border: 1px solid var(--primary-gold);
+      border-radius: 20px;
+      max-width: 600px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 25px;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* Slip Preview */
+    .slip-preview {
+      max-width: 200px;
+      max-height: 250px;
+      border-radius: 8px;
+      margin-top: 10px;
+      display: none;
+      border: 1px solid var(--primary-gold);
+    }
+
+    /* Floating AI Chat Widget Styles */
+    .ai-chat-btn {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: var(--gold-metallic);
+      color: #0b1326;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5), 0 0 15px rgba(212, 175, 55, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 1000;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .ai-chat-btn:hover {
+      transform: scale(1.1) translateY(-3px);
+      box-shadow: 0 12px 30px rgba(212, 175, 55, 0.7);
+    }
+
+    .ai-chat-btn i {
+      font-size: 1.6rem;
+    }
+
+    .ai-chat-badge {
+      position: absolute;
+      top: -4px;
+      right: -2px;
+      background: #ef4444;
+      color: #ffffff;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 10px;
+      border: 1px solid #0b1326;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      animation: pulse 2s infinite;
+    }
+
+    .ai-chat-box {
+      position: fixed;
+      bottom: 145px;
+      right: 20px;
+      width: 370px;
+      max-width: calc(100vw - 32px);
+      height: 520px;
+      max-height: calc(100vh - 180px);
+      background: rgba(11, 19, 38, 0.96);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 20px rgba(212, 175, 55, 0.2);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      display: none;
+      flex-direction: column;
+      z-index: 1001;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .ai-chat-box.open {
+      display: flex;
+      animation: chatSlideUp 0.3s ease forwards;
+    }
+
+    @keyframes chatSlideUp {
+      from { opacity: 0; transform: translateY(20px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .ai-chat-header {
+      background: linear-gradient(135deg, rgba(26, 43, 76, 0.9) 0%, rgba(11, 19, 38, 0.95) 100%);
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .ai-chat-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Prompt', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--primary-gold);
+    }
+
+    .ai-chat-title-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--gold-metallic);
+      color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    .ai-chat-status {
+      font-size: 0.7rem;
+      color: var(--accent-green);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .ai-chat-status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-green);
+      box-shadow: 0 0 8px var(--accent-green);
+    }
+
+    .ai-chat-close {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.3rem;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 50%;
+      transition: color 0.2s;
+    }
+
+    .ai-chat-close:hover {
+      color: #fff;
+    }
+
+    .ai-chat-quick-chips {
+      padding: 10px 12px;
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      white-space: nowrap;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+      scrollbar-width: thin;
+    }
+
+    .ai-chip {
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid var(--border-color);
+      color: #e2e8f0;
+      padding: 4px 10px;
+      border-radius: 14px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .ai-chip:hover {
+      background: var(--primary-gold);
+      color: #000;
+      font-weight: 600;
+    }
+
+    .ai-chat-messages {
+      flex: 1;
+      padding: 14px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .chat-msg {
+      display: flex;
+      gap: 8px;
+      max-width: 85%;
+    }
+
+    .chat-msg.user {
+      align-self: flex-end;
+      flex-direction: row-reverse;
+    }
+
+    .chat-msg.bot {
+      align-self: flex-start;
+    }
+
+    .chat-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .chat-msg.bot .chat-avatar {
+      background: var(--gold-metallic);
+      color: #000;
+    }
+
+    .chat-msg.user .chat-avatar {
+      background: #3b82f6;
+      color: #fff;
+    }
+
+    .chat-bubble {
+      padding: 10px 14px;
+      border-radius: 16px;
+      font-size: 0.85rem;
+      line-height: 1.45;
+      word-break: break-word;
+    }
+
+    .chat-msg.bot .chat-bubble {
+      background: rgba(30, 41, 59, 0.9);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      color: #f1f5f9;
+      border-top-left-radius: 4px;
+    }
+
+    .chat-msg.user .chat-bubble {
+      background: linear-gradient(135deg, #d4af37, #b38728);
+      color: #0b1326;
+      font-weight: 500;
+      border-top-right-radius: 4px;
+    }
+
+    .chat-typing {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 12px;
+      background: rgba(30, 41, 59, 0.8);
+      border-radius: 12px;
+      width: fit-content;
+      border: 1px solid rgba(212, 175, 55, 0.2);
+    }
+
+    .chat-typing-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--primary-gold);
+      animation: typingBlink 1.4s infinite ease-in-out both;
+    }
+
+    .chat-typing-dot:nth-child(1) { animation-delay: 0s; }
+    .chat-typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .chat-typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes typingBlink {
+      0%, 80%, 100% { transform: scale(0); opacity: 0.4; }
+      40% { transform: scale(1); opacity: 1; }
+    }
+
+    .ai-chat-input-container {
+      padding: 10px;
+      background: rgba(15, 23, 42, 0.9);
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      gap: 8px;
+    }
+
+    .ai-chat-input {
+      flex: 1;
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 8px 14px;
+      color: #fff;
+      font-size: 0.85rem;
+      outline: none;
+      font-family: 'Sarabun', sans-serif;
+    }
+
+    .ai-chat-input:focus {
+      border-color: var(--primary-gold);
+    }
+
+    .ai-chat-send {
+      background: var(--gold-metallic);
+      color: #000;
+      border: none;
+      border-radius: 12px;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: transform 0.2s;
+    }
+
+    .ai-chat-send:hover {
+      transform: scale(1.05);
+    }
+
+    /* =========================================================
+       Cross-Device & Cross-Platform Responsive Optimizations
+       (iOS iPhone, iPad, Android, Tablet, Desktop, Laptops)
+       ========================================================= */
+
+    /* Global Touch & Anti-Auto-Zoom Settings */
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Prevent iOS Safari forced auto-zoom on input focus */
+    .input-control, select, textarea, .ai-chat-input {
+      font-size: 16px !important; /* Minimum 16px prevents iOS forced zoom */
+    }
+
+    /* Custom Smooth Scrollbar for All Browsers */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(11, 19, 38, 0.6);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(212, 175, 55, 0.35);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary-gold);
+    }
+
+    /* Touch Feedback for Mobile Devices */
+    .nav-item:active,
+    .btn-submit:active,
+    .btn-copy:active,
+    .payment-tab-btn:active,
+    .ai-chat-btn:active,
+    .ai-chip:active,
+    .radio-card-content:active,
+    .size-box:active {
+      transform: scale(0.97);
+      opacity: 0.9;
+    }
+
+    /* Mobile Phones Portrait & Small Devices (< 480px) */
+    @media (max-width: 480px) {
+      body {
+        padding: 12px 8px calc(80px + env(safe-area-inset-bottom, 0px)) 8px;
+      }
+
+      .container {
+        padding: 0;
+      }
+
+      .header-card, .form-section, .payment-box, .summary-box {
+        padding: 16px 12px;
+        border-radius: 14px;
+      }
+
+      .header-title {
+        font-size: 1.3rem;
+        line-height: 1.35;
+      }
+
+      .header-subtitle {
+        font-size: 0.9rem;
+      }
+
+      .event-info-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .radio-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .shirt-size-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .account-number {
+        font-size: 1.25rem;
+        flex-wrap: wrap;
+      }
+
+      .ai-chat-btn {
+        bottom: calc(75px + env(safe-area-inset-bottom, 0px));
+        right: 14px;
+        width: 52px;
+        height: 52px;
+      }
+
+      .ai-chat-btn i {
+        font-size: 1.4rem;
+      }
+
+      .ai-chat-box {
+        bottom: calc(75px + env(safe-area-inset-bottom, 0px));
+        right: 8px;
+        left: 8px;
+        width: auto;
+        max-width: none;
+        height: calc(82dvh - 75px);
+        max-height: 520px;
+        border-radius: 18px;
+      }
+
+      .modal-content {
+        padding: 16px;
+        max-height: 85vh;
+        border-radius: 16px;
+      }
+    }
+
+    /* Medium Mobile & Tablets (481px - 768px) */
+    @media (min-width: 481px) and (max-width: 768px) {
+      .event-info-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .ai-chat-box {
+        bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+        right: 16px;
+        width: 350px;
+        height: 480px;
+      }
+    }
+
+    /* Tablets & Laptops / Desktops (> 769px) */
+    @media (min-width: 769px) {
+      body {
+        padding-bottom: 50px;
+      }
+
+      .container {
+        max-width: 860px;
+      }
+
+      .mobile-bottom-nav {
+        max-width: 600px;
+        margin: 0 auto;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 24px 24px 0 0;
+        border-left: 1px solid var(--border-color);
+        border-right: 1px solid var(--border-color);
+      }
+
+      .ai-chat-btn {
+        bottom: 85px;
+        right: 30px;
+        width: 62px;
+        height: 62px;
+      }
+
+      .ai-chat-box {
+        bottom: 155px;
+        right: 30px;
+        width: 380px;
+        height: 530px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  
+  <!-- Header Banner -->
+  <div id="sec-info" class="header-card">
+    
+    <div class="poster-banner-wrapper" onclick="openImageModal('S__7159861.jpg', 'โปสเตอร์ประชาสัมพันธ์งานเลี้ยงรุ่น NCO.1828')">
+      <img src="S__7159861.jpg" alt="โปสเตอร์งานเลี้ยงรุ่น NCO.1828" class="poster-img">
+      <span class="poster-zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> แตะเพื่อดูภาพขยาย</span>
+    </div>
+
+    <div class="badge-early">
+      <i class="fa-solid fa-gift"></i> พิเศษ 50 คนแรก รับพวงกุญแจ 1828 ฟรี! 1 ชิ้น
+    </div>
+    <h1 class="header-title">ขอเชิญร่วมงานเลี้ยงรุ่น NCO.1828 เหล่าทหารปืนใหญ่</h1>
+    <p class="header-subtitle">"กลับบ้านที่ลพบุรี แหล่งกำเนิดของพวกเราทุกคน"</p>
+    
+    <div class="event-info-grid">
+      <div class="info-box">
+        <i class="fa-regular fa-calendar-check"></i>
+        <div>
+          <label>วันจัดงาน</label>
+          <span>วันศุกร์ที่ 19 กุมภาพันธ์ 2570</span>
+        </div>
+      </div>
+      <div class="info-box">
+        <i class="fa-solid fa-location-dot"></i>
+        <div>
+          <label>สถานที่</label>
+          <span>โรงแรมโตเกียว จ.ลพบุรี</span>
+        </div>
+      </div>
+      <div class="info-box">
+        <i class="fa-solid fa-clock"></i>
+        <div>
+          <label>ช่วงเวลาเปิดลงทะเบียน</label>
+          <span>1 ส.ค. - 31 ธ.ค. 2569</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="benefits-list">
+      <span class="benefit-tag"><i class="fa-solid fa-vest"></i> ฟรี เสื้อโปโล WARRIX 1 ตัว</span>
+      <span class="benefit-tag"><i class="fa-solid fa-utensils"></i> อาหารเย็น 1 มื้อ + เช้า 1 มื้อ</span>
+      <span class="benefit-tag"><i class="fa-solid fa-trophy"></i> ชิงของรางวัล 10,000 บ.</span>
+      <span class="benefit-tag"><i class="fa-solid fa-gas-pump"></i> ชิงโชคค่าน้ำมัน 10,000 บ.</span>
+      <span class="benefit-tag"><i class="fa-solid fa-shirt"></i> ธีมงาน: แต่งไทย งานแผ่นดินสมเด็จพระนารายณ์</span>
+    </div>
+  </div>
+
+  <!-- Form Start -->
+  <form id="bookingForm">
+
+    <!-- Section 1: Personal Info -->
+    <div id="sec-register" class="form-section">
+      <div class="section-header">
+        <i class="fa-solid fa-user-gear"></i> 1. ข้อมูลผู้ลงทะเบียน
+      </div>
+      
+      <div class="form-group">
+        <label>ยศ - ชื่อ-นามสกุล <span class="required">*</span></label>
+        <input type="text" id="fullName" class="input-control" placeholder="เช่น จ.ส.อ. สมชาย ใจดี" required>
+      </div>
+
+      <div class="form-group">
+        <label>อีเมลสำหรับรับใบยืนยันการจอง <span class="required">*</span></label>
+        <input type="email" id="email" class="input-control" placeholder="เช่น somchai@gmail.com" required>
+      </div>
+
+      <div class="form-group">
+        <label>เบอร์โทรศัพท์ติดต่อ <span class="required">*</span></label>
+        <input type="tel" id="phone" class="input-control" placeholder="เช่น 0891234567" pattern="[0-9]{9,10}" required>
+      </div>
+    </div>
+
+    <!-- Section 2: Membership & Package -->
+    <div class="form-section">
+      <div class="section-header">
+        <i class="fa-solid fa-id-card"></i> 2. สถานะสมาชิก & แพ็กเกจเข้าร่วม
+      </div>
+
+      <div class="form-group">
+        <label>สถานะสมาชิก <span class="required">*</span></label>
+        <div class="radio-grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 15px;">
+          <label class="radio-card">
+            <input type="radio" name="memberStatus" value="เป็นสมาชิก" checked onchange="renderPackages()">
+            <div class="radio-card-content">
+              <span class="radio-title"><i class="fa-solid fa-circle-check" style="color:var(--accent-green)"></i> เป็นสมาชิก 1828</span>
+            </div>
+          </label>
+
+          <label class="radio-card">
+            <input type="radio" name="memberStatus" value="ไม่เป็นสมาชิก" onchange="renderPackages()">
+            <div class="radio-card-content">
+              <span class="radio-title"><i class="fa-solid fa-user-large"></i> ไม่เป็นสมาชิก</span>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>เลือกแพ็กเกจการเข้าร่วม <span class="required">*</span></label>
+        <div id="packageContainer" class="radio-grid">
+          <!-- Dynamic Packages rendered via JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3: Main Shirt Size -->
+    <div id="sec-size" class="form-section">
+      <div class="section-header" style="justify-content: space-between;">
+        <span><i class="fa-solid fa-shirt"></i> 3. ไซส์เสื้อโปโล WARRIX (แถมฟรีในแพ็กเกจ 1 ตัว)</span>
+        <button type="button" class="size-chart-btn" onclick="openSizeChartModal()">
+          <i class="fa-solid fa-ruler-combined"></i> ตารางไซส์
+        </button>
+      </div>
+
+      <div class="poster-banner-wrapper" style="margin-top: 10px; margin-bottom: 15px;" onclick="openImageModal('S__7159863.jpg', 'ภาพถ่ายผู้ร่วมงานสวมเสื้อโปโล WARRIX 1828 จริง')">
+        <img src="S__7159863.jpg" alt="ภาพตัวอย่างการสวมเสื้อโปโล 1828" class="poster-img">
+        <span class="poster-zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> แตะดูภาพตัวอย่างการสวมเสื้อจริง</span>
+      </div>
+
+      <div class="form-group">
+        <label>เลือกไซส์เสื้อหลักของคุณ <span class="required">*</span></label>
+        <div class="shirt-size-grid">
+          <label class="size-btn"><input type="radio" name="mainShirtSize" value="XS" checked><div class="size-box"><span class="size-name">XS</span><span class="size-chest">36"</span></div></label>
+          <label class="size-btn"><input type="radio" name="mainShirtSize" value="S"><div class="size-box"><span class="size-name">S</span><span class="size-chest">38"</span></div></label>
+          <label class="size-btn"><input type="radio" name="mainShirtSize" value="M"><div class="size-box"><span class="size-name">M</span><span class="size-chest">40"</span></div></label>
+          <label class="size-btn"><input type="radio" name="mainShirtSize" value="L"><div class="size-box"><span class="size-name">L</span><span class="size-chest">42"</span></div></label>
+          <label class="size-btn"><input type="radio" name="mainShirtSize" value="XL"><div class="size-box"><span class="size-name">XL</span><span class="size-chest">44"</span></div></label>
+          <label class="size-btn"><input type="radio" name="mainShirtSize" value="2L"><div class="size-box"><span class="size-name">2L</span><span class="size-chest">46"</span></div></label>
+          <label class="size-btn"><input type="radio" name="mainShirtSize" value="3L"><div class="size-box"><span class="size-name">3L</span><span class="size-chest">48"</span></div></label>
+          <label class="size-btn"><input type="radio" name="mainShirtSize" value="5L"><div class="size-box"><span class="size-name">5L</span><span class="size-chest">52"</span></div></label>
+          <label class="size-btn"><input type="radio" name="mainShirtSize" value="7L"><div class="size-box"><span class="size-name">7L</span><span class="size-chest">56"</span></div></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 4: Followers & Additional Rooms -->
+    <div class="form-section">
+      <div class="section-header">
+        <i class="fa-solid fa-users"></i> 4. ผู้ติดตามเพิ่มเติม (ถ้ามี)
+      </div>
+
+      <div class="form-group">
+        <label>จำนวนผู้ติดตาม (200 บาท / คน)</label>
+        <select id="followerCount" onchange="calculateTotal()">
+          <option value="0">ไม่มีผู้ติดตาม</option>
+          <option value="1">1 คน (+200 บ.)</option>
+          <option value="2">2 คน (+400 บ.)</option>
+          <option value="3">3 คน (+600 บ.)</option>
+          <option value="4">4 คน (+800 บ.)</option>
+        </select>
+      </div>
+
+      <div id="followerRoomGroup" class="form-group" style="display: none;">
+        <label>
+          <input type="checkbox" id="followerRoomCheck" onchange="calculateTotal()" style="width: auto; margin-right: 8px;">
+          เพิ่มห้องพักสำหรับผู้ติดตาม (+200 บาท / คน รวมเป็น 400 บ./คน)
+        </label>
+      </div>
+    </div>
+
+    <!-- Section 5: Order Extra Shirts -->
+    <div class="form-section">
+      <div class="section-header" style="justify-content: space-between;">
+        <span><i class="fa-solid fa-cart-plus"></i> 5. สั่งซื้อเสื้อโปโล WARRIX เพิ่มเติม</span>
+        <button type="button" class="btn-add-shirt" onclick="addExtraShirtRow()">
+          <i class="fa-solid fa-plus"></i> เพิ่มรายการเสื้อ
+        </button>
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
+        *ราคาเสื้อสั่งเพิ่ม: ไซส์ XS - 3L ตัวละ 330 บาท | ไซส์ 5L, 7L ตัวละ 400 บาท
+      </p>
+
+      <div id="extraShirtsContainer">
+        <!-- Dynamic Extra Shirts list -->
+      </div>
+    </div>
+
+    <!-- Section 6: Notes -->
+    <div class="form-section">
+      <div class="section-header">
+        <i class="fa-regular fa-comment-dots"></i> 6. หมายเหตุ / คำขอพิเศษ
+      </div>
+      <div class="form-group">
+        <textarea id="note" rows="3" placeholder="ระบุข้อความเพิ่มเติม (ถ้ามี)"></textarea>
+      </div>
+    </div>
+
+    <!-- Section 7: Summary & Payment -->
+    <div class="summary-box">
+      <h3 style="font-family: 'Prompt'; color: var(--primary-gold); margin-bottom: 15px;">
+        <i class="fa-solid fa-calculator"></i> สรุปยอดชำระเงิน
+      </h3>
+      <div id="summaryDetails">
+        <!-- Dynamic Summary Lines -->
+      </div>
+      <div class="summary-row total">
+        <span>ยอดรวมสุทธิ</span>
+        <span id="totalAmountDisplay">0 บาท</span>
+      </div>
+    </div>
+
+    <!-- Section 6: Payment Options -->
+    <div id="sec-payment-option" class="form-section">
+      <div class="section-header">
+        <i class="fa-solid fa-credit-card"></i> 6. ตัวเลือกการชำระเงิน
+      </div>
+
+      <div class="form-group">
+        <label>เลือกช่วงเวลาชำระเงิน <span class="required">*</span></label>
+        <div class="radio-grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 10px;">
+          <label class="radio-card">
+            <input type="radio" name="paymentOption" value="ชำระเงินทันที" checked onchange="togglePaymentOption()">
+            <div class="radio-card-content">
+              <span class="radio-title"><i class="fa-solid fa-money-bill-transfer" style="color:var(--accent-green)"></i> โอนชำระเงินทันที</span>
+              <span class="radio-desc">โอนเงินเข้าบัญชี และแนบสลิปทันที</span>
+            </div>
+          </label>
+
+          <label class="radio-card">
+            <input type="radio" name="paymentOption" value="ไว้ชำระเงินทีหลัง" onchange="togglePaymentOption()">
+            <div class="radio-card-content">
+              <span class="radio-title"><i class="fa-regular fa-clock" style="color:var(--primary-gold)"></i> ไว้ชำระเงินทีหลัง</span>
+              <span class="radio-desc">ลงทะเบียนไว้ก่อน โอนชำระเงินทีหลัง</span>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pay Later Notice Box -->
+    <div id="payLaterNotice" class="info-box" style="display: none; background: rgba(245, 158, 11, 0.15); border: 1px solid #f59e0b; margin-bottom: 20px; border-radius: 12px; padding: 15px;">
+      <i class="fa-solid fa-clock" style="color:#f59e0b; font-size:1.6rem;"></i>
+      <div>
+        <span style="color:#f59e0b; font-weight:700; font-size: 1rem;">ลงทะเบียนสำรองสิทธิ์ไว้ชำระเงินทีหลัง</span>
+        <label style="color:#e2e8f0; font-size:0.85rem; margin-top:3px; display:block;">
+          คุณสามารถลงทะเบียนล่วงหน้าได้เลย และสามารถโอนชำระเงินเข้าบัญชี SCB 560-286-0945 (ร.ต.วันชัย มีชาญ) ในภายหลังได้จนถึงวันที่ 31 ธ.ค. 2569
+        </label>
+      </div>
+    </div>
+
+    <!-- Payment Account Section -->
+    <div id="sec-payment" class="payment-box">
+      <!-- Payment Method Tab Switcher -->
+      <div class="payment-tab-container">
+        <button type="button" class="payment-tab-btn active" id="tabPromptPay" onclick="switchPaymentMethod('promptpay')">
+          <i class="fa-solid fa-qrcode"></i> สแกน QR Code (PromptPay)
+        </button>
+        <button type="button" class="payment-tab-btn" id="tabBank" onclick="switchPaymentMethod('bank')">
+          <i class="fa-solid fa-building-columns"></i> โอนผ่านบัญชีธนาคาร
+        </button>
+      </div>
+
+      <!-- Option 1: Dynamic PromptPay QR Code -->
+      <div id="paymentContentPromptPay" class="payment-method-content">
+        <div class="promptpay-card">
+          <div class="promptpay-header">
+            <i class="fa-solid fa-qrcode"></i> Thai QR Payment / PromptPay
+          </div>
+          <div class="promptpay-body">
+            <div class="promptpay-amount-box">
+              <div class="promptpay-amount-label">ยอดชำระเงินสแกนจ่าย</div>
+              <div class="promptpay-amount-val" id="promptpayAmountVal">0 บาท</div>
+            </div>
+
+            <div class="promptpay-qr-wrapper">
+              <img id="promptpayQrImg" src="https://promptpay.io/0892081550.png" alt="PromptPay QR Code" class="promptpay-qr-img" onerror="handleQrError(this)">
+            </div>
+
+            <div class="promptpay-acc-info">
+              <div style="font-weight: 700; color: #0f172a; font-size: 0.95rem;">ชื่อบัญชี: ร.ต.วันชัย มีชาญ</div>
+              <div style="font-size: 0.85rem; color: #475569; margin-top: 3px;">
+                <i class="fa-solid fa-mobile-screen-button"></i> พร้อมเพย์: <strong style="color: #003764;">089-208-1550</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 10px;">
+          <button type="button" class="btn-copy" style="padding: 8px 16px; font-size: 0.85rem;" onclick="downloadQrCode()">
+            <i class="fa-solid fa-download"></i> บันทึกภาพ QR Code
+          </button>
+          <button type="button" class="btn-copy" style="padding: 8px 16px; font-size: 0.85rem;" onclick="copyPromptPayNumber()">
+            <i class="fa-regular fa-copy"></i> คัดลอกเบอร์พร้อมเพย์
+          </button>
+        </div>
+      </div>
+
+      <!-- Option 2: Bank Transfer Details -->
+      <div id="paymentContentBank" class="payment-method-content" style="display: none;">
+        <div class="bank-logo">SCB</div>
+        <p style="font-size: 0.9rem; color: var(--text-muted);">โอนเงินเข้าบัญชี ธนาคารไทยพาณิชย์ (SCB)</p>
+        <div class="account-number">
+          560-286-0945
+          <button type="button" class="btn-copy" onclick="copyAccount()"><i class="fa-regular fa-copy"></i> คัดลอก</button>
+        </div>
+        <p style="font-weight: 600; color: #fff;">ชื่อบัญชี: ร.ต.วันชัย มีชาญ</p>
+        <p style="font-size: 0.85rem; color: var(--primary-gold); margin-top: 5px;"><i class="fa-solid fa-phone"></i> สอบถามเพิ่มเติม โทร: 089-208-1550</p>
+      </div>
+    </div>
+
+    <!-- Slip Upload Section -->
+    <div id="slipUploadSection" class="form-section">
+      <div class="section-header">
+        <i class="fa-solid fa-file-invoice-dollar"></i> แนบหลักฐานการโอนเงิน (สลิป) <span class="required">*</span>
+      </div>
+      <div class="form-group">
+        <input type="file" id="slipInput" accept="image/*" class="input-control" onchange="previewSlip(this)" required>
+        <img id="slipPreviewImg" class="slip-preview" alt="ตัวอย่างสลิป">
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" id="submitBtn" class="btn-submit" style="margin-bottom: 25px;">
+      <i class="fa-solid fa-paper-plane"></i> <span id="submitBtnText">ยืนยันการลงทะเบียนและโอนเงิน</span>
+    </button>
+  </form>
+
+  <!-- Section 8: Search Registration Status & Popup Trigger -->
+  <div id="sec-check" class="form-section">
+    <div class="section-header" style="justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+      <span><i class="fa-solid fa-magnifying-glass-location"></i> ตรวจสอบสถานะ / รายชื่อผู้ลงทะเบียน</span>
+      <button type="button" class="btn-copy" style="background: var(--gold-metallic); color: #000; font-weight: 700; border: none; padding: 6px 14px;" onclick="openRegistrantsModal()">
+        <i class="fa-solid fa-window-restore"></i> เปิด Popup หน้าต่างเต็ม
+      </button>
+    </div>
+    <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 15px;">
+      พิมพ์ยศ ชื่อ นามสกุล หรือเบอร์โทรศัพท์ เพื่อตรวจสอบสถานะการจองและไซส์เสื้อของคุณ (ข้อมูลจริงจาก Google Sheets หลังบ้าน)
+    </p>
+
+    <div style="display: flex; gap: 8px; margin-bottom: 15px;">
+      <input type="text" id="searchKeyword" class="input-control" placeholder="พิมพ์ชื่อ นามสกุล หรือเบอร์โทร..." onkeyup="if(event.key==='Enter') searchRegistrations()">
+      <button type="button" class="btn-add-shirt" style="background: var(--gold-metallic); color: #000; font-weight: 700; border: none; padding: 0 18px; white-space: nowrap;" onclick="searchRegistrations()">
+        <i class="fa-solid fa-magnifying-glass"></i> ค้นหา
+      </button>
+      <button type="button" class="btn-add-shirt" style="background: rgba(30,41,59,0.9); color: var(--primary-gold); border: 1px solid var(--border-color); white-space: nowrap;" onclick="openRegistrantsModal()">
+        <i class="fa-solid fa-expand"></i> แบบ Popup
+      </button>
+    </div>
+
+    <div id="searchResultsContainer">
+      <!-- Dynamic Search Results -->
+    </div>
+  </div>
+
+</div>
+
+<!-- Modal 1: Size Chart -->
+<div id="sizeChartModal" class="modal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal('sizeChartModal')">&times;</button>
+    <h3 style="font-family: 'Prompt'; color: var(--primary-gold); margin-bottom: 15px; text-align: center;">
+      แบบเสื้อ & ตารางไซส์เสื้อโปโล WARRIX
+    </h3>
+    <div class="poster-banner-wrapper" style="margin-bottom: 15px;" onclick="openImageModal('S__7159863.jpg', 'ภาพถ่ายผู้ร่วมงานสวมเสื้อโปโล WARRIX 1828 จริง')">
+      <img src="S__7159863.jpg" alt="ภาพตัวอย่างเสื้อจริง" class="poster-img">
+      <span class="poster-zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> แตะดูภาพตัวอย่างการสวมเสื้อจริง</span>
+    </div>
+    <table style="width: 100%; border-collapse: collapse; text-align: center; color: #fff; font-size: 0.9rem;">
+      <thead>
+        <tr style="background: var(--primary-gold); color: #000;">
+          <th style="padding: 10px; border: 1px solid #444;">ขนาด (นิ้ว)</th>
+          <th style="padding: 10px; border: 1px solid #444;">รอบอก</th>
+          <th style="padding: 10px; border: 1px solid #444;">ยาว</th>
+          <th style="padding: 10px; border: 1px solid #444;">ราคาสั่งเพิ่ม</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding: 8px; border: 1px solid #333;">XS</td><td>36"</td><td>25"</td><td>330 บ.</td></tr>
+        <tr style="background: rgba(255,255,255,0.05);"><td style="padding: 8px; border: 1px solid #333;">S</td><td>38"</td><td>26"</td><td>330 บ.</td></tr>
+        <tr><td style="padding: 8px; border: 1px solid #333;">M</td><td>40"</td><td>27"</td><td>330 บ.</td></tr>
+        <tr style="background: rgba(255,255,255,0.05);"><td style="padding: 8px; border: 1px solid #333;">L</td><td>42"</td><td>28"</td><td>330 บ.</td></tr>
+        <tr><td style="padding: 8px; border: 1px solid #333;">XL</td><td>44"</td><td>29"</td><td>330 บ.</td></tr>
+        <tr style="background: rgba(255,255,255,0.05);"><td style="padding: 8px; border: 1px solid #333;">2L</td><td>46"</td><td>30"</td><td>330 บ.</td></tr>
+        <tr><td style="padding: 8px; border: 1px solid #333;">3L</td><td>48"</td><td>31"</td><td>330 บ.</td></tr>
+        <tr style="background: rgba(212,175,55,0.2);"><td style="padding: 8px; border: 1px solid #333; font-weight:700;">5L</td><td>52"</td><td>32"</td><td style="color:var(--primary-gold); font-weight:700;">400 บ.</td></tr>
+        <tr style="background: rgba(212,175,55,0.2);"><td style="padding: 8px; border: 1px solid #333; font-weight:700;">7L</td><td>56"</td><td>33"</td><td style="color:var(--primary-gold); font-weight:700;">400 บ.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal 2: Submission Status -->
+<div id="statusModal" class="modal">
+  <div class="modal-content" style="text-align: center;">
+    <div id="modalStatusIcon" style="font-size: 3.5rem; margin-bottom: 15px;"></div>
+    <h3 id="modalStatusTitle" style="font-family: 'Prompt'; font-size: 1.4rem; margin-bottom: 10px;"></h3>
+    <p id="modalStatusDesc" style="color: var(--text-muted); margin-bottom: 20px; font-size: 0.95rem;"></p>
+    <button class="btn-submit" onclick="closeModal('statusModal')">ตกลง</button>
+  </div>
+</div>
+
+<!-- Modal 3: Fullscreen Image Viewer -->
+<div id="imageViewerModal" class="modal" onclick="closeModal('imageViewerModal')">
+  <div class="modal-content" style="max-width: 92vw; background: transparent; border: none; padding: 0; text-align: center;" onclick="event.stopPropagation()">
+    <button class="modal-close" style="top: -40px; right: 0; font-size: 2.2rem; color: #fff;" onclick="closeModal('imageViewerModal')">&times;</button>
+    <img id="modalViewerImg" src="" alt="ภาพขยาย" style="max-width: 100%; max-height: 82vh; border-radius: 12px; border: 2px solid var(--primary-gold); box-shadow: 0 10px 30px rgba(0,0,0,0.9);">
+    <p id="modalViewerCaption" style="color: var(--primary-gold); font-weight: 600; margin-top: 12px; font-size: 1rem; font-family:'Prompt';"></p>
+  </div>
+</div>
+
+<!-- Modal 4: Registrants & Status Lookup Popup Modal -->
+<div id="registrantsModal" class="modal">
+  <div class="modal-content" style="max-width: 820px; width: 95vw; max-height: 88vh; display: flex; flex-direction: column; padding: 22px;">
+    <button class="modal-close" onclick="closeModal('registrantsModal')">&times;</button>
+
+    <div style="text-align: center; margin-bottom: 15px; border-bottom: 1px solid rgba(212, 175, 55, 0.25); padding-bottom: 12px;">
+      <h3 style="font-family: 'Prompt'; color: var(--primary-gold); font-size: 1.3rem; margin-bottom: 4px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+        <i class="fa-solid fa-users-rectangle"></i> ตรวจสอบสถานะ / รายชื่อผู้ลงทะเบียน
+      </h3>
+      <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0;">
+        ข้อมูลอัปเดตเรียลไทม์ เชื่อมต่อตรงจากระบบหลังบ้าน Google Sheets
+      </p>
+    </div>
+
+    <!-- Search Bar & Status Filters -->
+    <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid var(--border-color); border-radius: 14px; padding: 14px; margin-bottom: 14px;">
+      <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+        <div style="position: relative; flex: 1;">
+          <input type="text" id="modalSearchKeyword" class="input-control" placeholder="พิมพ์ยศ ชื่อ นามสกุล หรือเบอร์โทรศัพท์..." onkeyup="if(event.key==='Enter') searchRegistrationsModal()" style="padding-left: 36px;">
+          <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--primary-gold); font-size: 0.9rem;"></i>
+        </div>
+        <button type="button" class="btn-submit" style="width: auto; padding: 0 18px; margin: 0; white-space: nowrap; font-size: 0.92rem; height: auto;" onclick="searchRegistrationsModal()">
+          ค้นหา
+        </button>
+      </div>
+
+      <!-- Quick Filter Chips -->
+      <div style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center;">
+        <span style="font-size: 0.8rem; color: var(--text-muted); margin-right: 4px;"><i class="fa-solid fa-filter"></i> สถานะ:</span>
+        <button type="button" class="filter-chip active" id="chipAll" onclick="filterRegistrantsByStatus('all')">ทั้งหมด</button>
+        <button type="button" class="filter-chip" id="chipPending" onclick="filterRegistrantsByStatus('pending')">รอตรวจสอบสลิป</button>
+        <button type="button" class="filter-chip" id="chipPayLater" onclick="filterRegistrantsByStatus('paylater')">ไว้ชำระเงินทีหลัง</button>
+        <button type="button" class="filter-chip" id="chipApproved" onclick="filterRegistrantsByStatus('approved')">ชำระเงินแล้ว</button>
+      </div>
+    </div>
+
+    <!-- Summary Count & Refresh -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 0 4px; font-size: 0.85rem; color: var(--text-muted);">
+      <span id="modalRegistrantsCount"><i class="fa-solid fa-list-check"></i> กำลังโหลดข้อมูล...</span>
+      <button type="button" class="btn-copy" style="font-size: 0.78rem; padding: 4px 10px;" onclick="fetchRegistrationsModalData()">
+        <i class="fa-solid fa-arrows-rotate"></i> รีเฟรชข้อมูล
+      </button>
+    </div>
+
+    <!-- Scrollable Registrant Cards Container -->
+    <div id="modalSearchResultsContainer" style="flex: 1; overflow-y: auto; padding-right: 4px;">
+      <!-- Dynamic Search Results -->
+    </div>
+  </div>
+</div>
+
+<!-- Floating AI Chat Button (Bottom-Right) -->
+<div id="aiChatBtn" class="ai-chat-btn" onclick="toggleChatBox()" title="ถาม/ตอบ">
+  <i class="fa-solid fa-comments"></i>
+  <span class="ai-chat-badge">ถาม/ตอบ</span>
+</div>
+
+<!-- Floating AI Chat Window -->
+<div id="aiChatBox" class="ai-chat-box">
+  <div class="ai-chat-header">
+    <div class="ai-chat-title">
+      <div class="ai-chat-title-icon">
+        <i class="fa-solid fa-robot"></i>
+      </div>
+      <div>
+        <div>ผู้ช่วย AI NCO.1828</div>
+        <div class="ai-chat-status">
+          <span class="ai-chat-status-dot"></span> พร้อมตอบคำถาม 24 ชม.
+        </div>
+      </div>
+    </div>
+    <button class="ai-chat-close" onclick="toggleChatBox()">&times;</button>
+  </div>
+
+  <div class="ai-chat-quick-chips">
+    <span class="ai-chip" onclick="sendQuickQuestion('ค่าลงทะเบียนกี่บาท?')">💰 ค่าลงทะเบียน</span>
+    <span class="ai-chip" onclick="sendQuickQuestion('มีห้องพักให้ไหม?')">🏨 ห้องพัก</span>
+    <span class="ai-chip" onclick="sendQuickQuestion('ขอตารางไซส์เสื้อโปโล')">👕 ไซส์เสื้อ</span>
+    <span class="ai-chip" onclick="sendQuickQuestion('โอนเงินเข้าบัญชีไหน?')">💳 บัญชีโอนเงิน</span>
+    <span class="ai-chip" onclick="sendQuickQuestion('ไม่ได้เป็นสมาชิกเข้าร่วมงานได้ไหม?')">👥 ไม่ใช่สมาชิก</span>
+  </div>
+
+  <div id="aiChatMessages" class="ai-chat-messages">
+    <!-- Initial Bot Welcome Message -->
+    <div class="chat-msg bot">
+      <div class="chat-avatar"><i class="fa-solid fa-robot"></i></div>
+      <div class="chat-bubble">
+        สวัสดีครับเพื่อน NCO.1828! 🎖️ มีข้อสงสัยเรื่องการลงทะเบียน งานเลี้ยงรุ่น เสื้อโปโล หรือห้องพัก สอบถามผมได้เลยครับ!
+      </div>
+    </div>
+  </div>
+
+  <div class="ai-chat-input-container">
+    <input type="text" id="aiChatInput" class="ai-chat-input" placeholder="พิมพ์ข้อความสอบถามที่นี่..." onkeyup="if(event.key==='Enter') sendChatMessage()">
+    <button class="ai-chat-send" onclick="sendChatMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+  </div>
+</div>
+
+<script>
+  // Google Apps Script Web App Endpoint URL or local Express API
+  const SCRIPT_URL = "/api/booking";
+
+  // Package definitions
+  const memberPackages = [
+    { id: "m1", title: "คนเดียว (ไม่เอาห้องพัก)", price: 800, desc: "สำหรับสมาชิก 1 ท่าน รวมบัตรผ่านและเสื้อ 1 ตัว" },
+    { id: "m2", title: "2 คน (ไม่เอาห้องพัก)", price: 1000, desc: "สำหรับสมาชิกและคู่สมรส/ผู้ติดตาม 2 ท่าน (ไม่รับห้อง)" },
+    { id: "m3", title: "คนเดียว (พร้อมห้องพัก)", price: 1300, desc: "สำหรับสมาชิก 1 ท่าน รวมห้องพักโรงแรมโตเกียว" },
+    { id: "m4", title: "2 คน (พร้อมห้องพัก)", price: 1500, desc: "สำหรับ 2 ท่าน รวมห้องพักโรงแรมโตเกียว 1 ห้อง" }
+  ];
+
+  const nonMemberPackages = [
+    { id: "nm1", title: "คนเดียว", price: 1500, desc: "สำหรับผู้ไม่ได้เป็นสมาชิก 1 ท่าน" },
+    { id: "nm2", title: "2 คน", price: 2000, desc: "สำหรับผู้ไม่ได้เป็นสมาชิก 2 ท่าน" }
+  ];
+
+  let slipBase64 = "";
+
+  // Render packages on load & change
+  function renderPackages() {
+    const isMember = document.querySelector('input[name="memberStatus"]:checked').value === "เป็นสมาชิก";
+    const container = document.getElementById("packageContainer");
+    const packages = isMember ? memberPackages : nonMemberPackages;
+
+    container.innerHTML = packages.map((pkg, idx) => `
+      <label class="radio-card">
+        <input type="radio" name="packageSelected" value="${pkg.title} (${pkg.price} บ.)" data-price="${pkg.price}" ${idx === 0 ? 'checked' : ''} onchange="calculateTotal()">
+        <div class="radio-card-content">
+          <span class="radio-title">
+            <span>${pkg.title}</span>
+            <span class="radio-price">${pkg.price.toLocaleString()} ฿</span>
+          </span>
+          <span class="radio-desc">${pkg.desc}</span>
+        </div>
+      </label>
+    `).join('');
+
+    calculateTotal();
+  }
+
+  // Add extra shirt row
+  function addExtraShirtRow() {
+    const container = document.getElementById("extraShirtsContainer");
+    const rowId = "shirt_" + Date.now();
+    const div = document.createElement("div");
+    div.className = "extra-shirt-row";
+    div.id = rowId;
+    div.innerHTML = `
+      <select class="extra-shirt-size input-control" style="flex: 2;" onchange="calculateTotal()">
+        <option value="XS" data-price="330">XS (36") - 330 บ.</option>
+        <option value="S" data-price="330">S (38") - 330 บ.</option>
+        <option value="M" data-price="330">M (40") - 330 บ.</option>
+        <option value="L" data-price="330">L (42") - 330 บ.</option>
+        <option value="XL" data-price="330">XL (44") - 330 บ.</option>
+        <option value="2L" data-price="330">2L (46") - 330 บ.</option>
+        <option value="3L" data-price="330">3L (48") - 330 บ.</option>
+        <option value="5L" data-price="400">5L (52") - 400 บ.</option>
+        <option value="7L" data-price="400">7L (56") - 400 บ.</option>
+      </select>
+      <input type="number" class="extra-shirt-qty input-control" style="flex: 1;" value="1" min="1" max="10" onchange="calculateTotal()" onkeyup="calculateTotal()">
+      <button type="button" class="btn-remove-shirt" onclick="removeExtraShirtRow('${rowId}')"><i class="fa-solid fa-trash-can"></i></button>
+    `;
+    container.appendChild(div);
+    calculateTotal();
+  }
+
+  function removeExtraShirtRow(rowId) {
+    const row = document.getElementById(rowId);
+    if (row) row.remove();
+    calculateTotal();
+  }
+
+  // Calculation Logic
+  function calculateTotal() {
+    const summaryContainer = document.getElementById("summaryDetails");
+    let html = "";
+    let grandTotal = 0;
+
+    // 1. Package price
+    const pkgInput = document.querySelector('input[name="packageSelected"]:checked');
+    if (pkgInput) {
+      const pkgPrice = parseInt(pkgInput.getAttribute("data-price")) || 0;
+      grandTotal += pkgPrice;
+      html += `
+        <div class="summary-row">
+          <span>แพ็กเกจ: ${pkgInput.value.split(" (")[0]}</span>
+          <span>${pkgPrice.toLocaleString()} บาท</span>
+        </div>
+      `;
+    }
+
+    // 2. Followers
+    const followerCountSelect = document.getElementById("followerCount");
+    const count = parseInt(followerCountSelect.value) || 0;
+    const roomCheck = document.getElementById("followerRoomCheck");
+    const followerRoomGroup = document.getElementById("followerRoomGroup");
+
+    if (count > 0) {
+      followerRoomGroup.style.display = "block";
+      const pricePerPerson = roomCheck.checked ? 400 : 200;
+      const totalFollowerCost = count * pricePerPerson;
+      grandTotal += totalFollowerCost;
+      html += `
+        <div class="summary-row">
+          <span>ผู้ติดตาม ${count} คน (${roomCheck.checked ? 'พร้อมห้องพัก 400' : 'ไม่รวมห้องพัก 200'}บ./คน)</span>
+          <span>${totalFollowerCost.toLocaleString()} บาท</span>
+        </div>
+      `;
+    } else {
+      followerRoomGroup.style.display = "none";
+    }
+
+    // 3. Extra Shirts
+    const shirtRows = document.querySelectorAll(".extra-shirt-row");
+    let extraShirtsTotal = 0;
+    shirtRows.forEach(row => {
+      const sizeSelect = row.querySelector(".extra-shirt-size");
+      const qtyInput = row.querySelector(".extra-shirt-qty");
+      const price = parseInt(sizeSelect.options[sizeSelect.selectedIndex].getAttribute("data-price"));
+      const qty = parseInt(qtyInput.value) || 0;
+      const cost = price * qty;
+      extraShirtsTotal += cost;
+      if (qty > 0) {
+        html += `
+          <div class="summary-row">
+            <span>เสื้อเพิ่ม (${sizeSelect.value}) x ${qty} ตัว</span>
+            <span>${cost.toLocaleString()} บาท</span>
+          </div>
+        `;
+      }
+    });
+    grandTotal += extraShirtsTotal;
+
+    summaryContainer.innerHTML = html || '<div class="summary-row"><span>ไม่มีรายการ</span><span>0 บาท</span></div>';
+    document.getElementById("totalAmountDisplay").innerText = grandTotal.toLocaleString() + " บาท";
+
+    // Update dynamic PromptPay QR code
+    updatePromptPayQR(grandTotal);
+
+    return grandTotal;
+  }
+
+  // PromptPay QR Logic & Helpers
+  let currentPromptPayAmount = 0;
+
+  function switchPaymentMethod(method) {
+    const tabPromptPay = document.getElementById("tabPromptPay");
+    const tabBank = document.getElementById("tabBank");
+    const contentPromptPay = document.getElementById("paymentContentPromptPay");
+    const contentBank = document.getElementById("paymentContentBank");
+
+    if (method === 'promptpay') {
+      tabPromptPay.classList.add("active");
+      tabBank.classList.remove("active");
+      contentPromptPay.style.display = "block";
+      contentBank.style.display = "none";
+    } else {
+      tabBank.classList.add("active");
+      tabPromptPay.classList.remove("active");
+      contentBank.style.display = "block";
+      contentPromptPay.style.display = "none";
+    }
+  }
+
+  function updatePromptPayQR(amount) {
+    currentPromptPayAmount = amount;
+    const amountValElem = document.getElementById("promptpayAmountVal");
+    const qrImgElem = document.getElementById("promptpayQrImg");
+
+    if (amountValElem) {
+      amountValElem.innerText = amount.toLocaleString() + " บาท";
+    }
+
+    if (qrImgElem) {
+      // Primary: promptpay.io dynamic image API
+      const qrUrl = amount > 0 
+        ? `https://promptpay.io/0892081550/${amount}.png` 
+        : `https://promptpay.io/0892081550.png`;
+      qrImgElem.src = qrUrl;
+    }
+  }
+
+  function handleQrError(imgElem) {
+    // Fallback QR code generator if promptpay.io fails to load
+    const payload = generatePromptPayPayload("0892081550", currentPromptPayAmount);
+    imgElem.src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(payload)}`;
+  }
+
+  function copyPromptPayNumber() {
+    navigator.clipboard.writeText("0892081550");
+    alert("คัดลอกเบอร์พร้อมเพย์ 089-208-1550 เรียบร้อยแล้ว");
+  }
+
+  function downloadQrCode() {
+    const qrImg = document.getElementById("promptpayQrImg");
+    if (!qrImg || !qrImg.src) return;
+
+    const link = document.createElement("a");
+    link.href = qrImg.src;
+    link.target = "_blank";
+    link.download = `PromptPay_NCO1828_${currentPromptPayAmount}THB.png`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  function generatePromptPayPayload(mobileOrId, amount) {
+    let target = mobileOrId.replace(/[^0-9]/g, '');
+    if (target.length === 10 && target.startsWith('0')) {
+      target = '0066' + target.substring(1);
+    }
+    
+    const targetTagVal = '0016A00000067701011101' + (target.length < 10 ? '0' : '') + target.length + target;
+    
+    let amountStr = '';
+    if (amount && amount > 0) {
+      amountStr = Number(amount).toFixed(2);
+    }
+    const amountTagVal = amountStr ? '54' + (amountStr.length < 10 ? '0' : '') + amountStr.length + amountStr : '';
+    
+    const rawPayload = '000201010212' +
+      '29' + (targetTagVal.length < 10 ? '0' : '') + targetTagVal.length + targetTagVal +
+      '5303764' +
+      amountTagVal +
+      '5802TH' +
+      '6304';
+      
+    return rawPayload + crc16(rawPayload);
+  }
+
+  function crc16(data) {
+    let crc = 0xFFFF;
+    for (let i = 0; i < data.length; i++) {
+      let x = ((crc >> 8) ^ data.charCodeAt(i)) & 0xFF;
+      x ^= x >> 4;
+      crc = ((crc << 8) ^ (x << 12) ^ (x << 5) ^ x) & 0xFFFF;
+    }
+    return crc.toString(16).toUpperCase().padStart(4, '0');
+  }
+
+  // Preview slip image & encode base64
+  function previewSlip(input) {
+    const file = input.files[0];
+    const preview = document.getElementById("slipPreviewImg");
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        slipBase64 = e.target.result;
+        preview.src = slipBase64;
+        preview.style.display = "block";
+      };
+      reader.readAsDataURL(file);
+    } else {
+      slipBase64 = "";
+      preview.style.display = "none";
+    }
+  }
+
+  // Copy account number
+  function copyAccount() {
+    navigator.clipboard.writeText("5602860945");
+    alert("คัดลอกเลขบัญชี 560-286-0945 เรียบร้อยแล้ว");
+  }
+
+  // Modal helpers
+  function openSizeChartModal() {
+    document.getElementById("sizeChartModal").style.display = "flex";
+  }
+
+  function closeModal(modalId) {
+    document.getElementById(modalId).style.display = "none";
+  }
+
+  // Helper for summarizing extra shirts string
+  function getExtraShirtsSummary() {
+    const shirtRows = document.querySelectorAll(".extra-shirt-row");
+    const details = [];
+    shirtRows.forEach(row => {
+      const size = row.querySelector(".extra-shirt-size").value;
+      const qty = row.querySelector(".extra-shirt-qty").value;
+      if (qty > 0) {
+        details.push(`${size} (${qty} ตัว)`);
+      }
+    });
+    return details.length > 0 ? details.join(", ") : "ไม่มี";
+  }
+
+  // Submit Handler
+  document.getElementById("bookingForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const paymentOption = document.querySelector('input[name="paymentOption"]:checked').value;
+
+    if (paymentOption === "ชำระเงินทันที" && !slipBase64) {
+      alert("กรุณาแนบสลิปการโอนเงินก่อนส่งแบบฟอร์ม");
+      return;
+    }
+
+    const submitBtn = document.getElementById("submitBtn");
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> กำลังบันทึกข้อมูล...`;
+
+    const totalAmount = calculateTotal();
+    const payload = {
+      fullName: document.getElementById("fullName").value,
+      email: document.getElementById("email").value,
+      phone: document.getElementById("phone").value,
+      memberStatus: document.querySelector('input[name="memberStatus"]:checked').value,
+      packageSelected: document.querySelector('input[name="packageSelected"]:checked').value,
+      mainShirtSize: document.querySelector('input[name="mainShirtSize"]:checked').value,
+      followerCount: document.getElementById("followerCount").value,
+      followerRoom: document.getElementById("followerRoomCheck").checked,
+      extraShirtsDetail: getExtraShirtsSummary(),
+      totalAmount: totalAmount,
+      paymentOption: paymentOption,
+      note: document.getElementById("note").value,
+      slipImage: paymentOption === "ชำระเงินทันที" ? slipBase64 : ""
+    };
+
+    if (SCRIPT_URL === "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL") {
+      // Demo / Local test mode notice
+      setTimeout(() => {
+        showStatusModal(
+          "fa-circle-check",
+          "#22c55e",
+          "บันทึกข้อมูลแบบฟอร์มเรียบร้อย!",
+          `คุณได้ลงทะเบียนเข้าร่วมงานเลี้ยงรุ่น NCO.1828 สำเร็จแล้ว (ยอดรวม ${totalAmount.toLocaleString()} บาท)<br><br><small style="color:var(--primary-gold);">*หมายเหตุ: อย่าลืมนำ URL Google Apps Script Web App ที่ได้จากการ Deploy มาใส่ในโค้ดตัวแปร SCRIPT_URL ใน index.html เพื่อส่งข้อมูลเข้า Google Sheets แบบ Real-time</small>`
+        );
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> ยืนยันการลงทะเบียนและโอนเงิน`;
+      }, 1000);
+      return;
+    }
+
+    fetch(SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    })
+    .then(res => res.json())
+    .then(res => {
+      if (res.status === "success") {
+        showStatusModal(
+          "fa-circle-check",
+          "#22c55e",
+          "ลงทะเบียนสำเร็จเรียบร้อย!",
+          `ขอบคุณสำหรับข้อมูลครับ ทางคณะผู้จัดงาน NCO.1828 ได้รับข้อมูลการจองและสลิปการโอนเงินเรียบร้อยแล้ว`
+        );
+        document.getElementById("bookingForm").reset();
+        renderPackages();
+        document.getElementById("slipPreviewImg").style.display = "none";
+        slipBase64 = "";
+      } else {
+        throw new Error(res.message || "เกิดข้อผิดพลาดในการบันทึกข้อมูล");
+      }
+    })
+    .catch(err => {
+      showStatusModal(
+        "fa-circle-xmark",
+        "#ef4444",
+        "เกิดข้อผิดพลาดในการส่งข้อมูล",
+        `โปรดลองอีกครั้งหรือติดต่อสอบถามโทร 089-208-1550 (${err.toString()})`
+      );
+    })
+    .finally(() => {
+      submitBtn.disabled = false;
+      const isPayNow = document.querySelector('input[name="paymentOption"]:checked').value === "ชำระเงินทันที";
+      submitBtn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> <span id="submitBtnText">${isPayNow ? 'ยืนยันการลงทะเบียนและโอนเงิน' : 'ยืนยันการลงทะเบียน (ไว้ชำระเงินทีหลัง)'}</span>`;
+    });
+  });
+
+  // Toggle Payment Option Handler
+  function togglePaymentOption() {
+    const isPayNow = document.querySelector('input[name="paymentOption"]:checked').value === "ชำระเงินทันที";
+    const slipSection = document.getElementById("slipUploadSection");
+    const slipInput = document.getElementById("slipInput");
+    const payLaterNotice = document.getElementById("payLaterNotice");
+    const submitBtnText = document.getElementById("submitBtnText");
+
+    if (isPayNow) {
+      slipSection.style.display = "block";
+      slipInput.required = true;
+      payLaterNotice.style.display = "none";
+      if (submitBtnText) submitBtnText.innerText = "ยืนยันการลงทะเบียนและโอนเงิน";
+    } else {
+      slipSection.style.display = "none";
+      slipInput.required = false;
+      payLaterNotice.style.display = "flex";
+      if (submitBtnText) submitBtnText.innerText = "ยืนยันการลงทะเบียน (ไว้ชำระเงินทีหลัง)";
+    }
+  }
+
+  function showStatusModal(iconClass, color, title, desc) {
+    const modal = document.getElementById("statusModal");
+    const icon = document.getElementById("modalStatusIcon");
+    icon.className = `fa-solid ${iconClass}`;
+    icon.style.color = color;
+    document.getElementById("modalStatusTitle").innerText = title;
+    document.getElementById("modalStatusDesc").innerHTML = desc;
+    modal.style.display = "flex";
+  }
+
+  // Fullscreen Image Lightbox Modal
+  function openImageModal(imgSrc, caption) {
+    document.getElementById("modalViewerImg").src = imgSrc;
+    document.getElementById("modalViewerCaption").innerText = caption || "";
+    document.getElementById("imageViewerModal").style.display = "flex";
+  }
+
+  // Initialize page
+  renderPackages();
+
+  // Mobile Bottom Nav Switching
+  function switchNav(elem, targetId) {
+    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+    elem.classList.add('active');
+    if (targetId) {
+      const targetElem = document.getElementById(targetId);
+      if (targetElem) {
+        targetElem.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }
+
+  // Auto active tab highlight on scroll
+  window.addEventListener('scroll', () => {
+    const sections = ['sec-info', 'sec-register', 'sec-size', 'sec-payment', 'sec-check'];
+    const scrollPos = window.scrollY + 200;
+
+    sections.forEach(secId => {
+      const el = document.getElementById(secId);
+      if (el) {
+        const top = el.offsetTop;
+        const height = el.offsetHeight;
+        if (scrollPos >= top && scrollPos < top + height) {
+          const navBtn = document.querySelector(`.nav-item[data-target="${secId}"]`);
+          if (navBtn) {
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            navBtn.classList.add('active');
+          }
+        }
+      }
+    });
+  });
+
+  // Registrants Popup Modal State & Logic
+  let globalRegistrantsData = [];
+  let currentStatusFilter = 'all';
+
+  function openRegistrantsModal(initialKeyword = '') {
+    const modal = document.getElementById("registrantsModal");
+    if (!modal) return;
+    modal.style.display = "flex";
+
+    const input = document.getElementById("modalSearchKeyword");
+    if (input) {
+      input.value = initialKeyword;
+      setTimeout(() => input.focus(), 150);
+    }
+
+    fetchRegistrationsModalData();
+  }
+
+  function fetchRegistrationsModalData() {
+    const container = document.getElementById("modalSearchResultsContainer");
+    const countElem = document.getElementById("modalRegistrantsCount");
+
+    if (container) {
+      container.innerHTML = `
+        <div style="text-align: center; padding: 35px 20px; color: var(--primary-gold);">
+          <i class="fa-solid fa-spinner fa-spin fa-2x"></i>
+          <p style="margin-top: 12px; font-family: 'Prompt'; font-size: 0.95rem;">กำลังดึงข้อมูลผู้ลงทะเบียนจาก Google Sheets หลังบ้าน...</p>
+        </div>
+      `;
+    }
+
+    fetch(SCRIPT_URL + "?action=list")
+      .then(res => res.json())
+      .then(res => {
+        if (res.status === "success" && res.data) {
+          globalRegistrantsData = res.data;
+          renderModalSearchResults();
+        } else {
+          if (container) {
+            container.innerHTML = `
+              <div style="text-align: center; padding: 35px 20px; color: var(--text-muted);">
+                <i class="fa-regular fa-folder-open fa-2x"></i>
+                <p style="margin-top: 10px;">ไม่พบข้อมูลรายชื่อผู้ลงทะเบียนใน Google Sheets หลังบ้าน</p>
+              </div>
+            `;
+          }
+          if (countElem) countElem.innerText = "พบ 0 รายการ";
+        }
+      })
+      .catch(err => {
+        if (container) {
+          container.innerHTML = `
+            <div style="text-align: center; padding: 35px 20px; color: var(--accent-red);">
+              <i class="fa-solid fa-triangle-exclamation fa-2x"></i>
+              <p style="margin-top: 10px;">เกิดข้อผิดพลาดในการเชื่อมต่อระบบหลังบ้าน Google Sheets</p>
+            </div>
+          `;
+        }
+        if (countElem) countElem.innerText = "เชื่อมต่อระบบไม่ได้";
+      });
+  }
+
+  function filterRegistrantsByStatus(status) {
+    currentStatusFilter = status;
+    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+
+    if (status === 'all') document.getElementById('chipAll')?.classList.add('active');
+    if (status === 'pending') document.getElementById('chipPending')?.classList.add('active');
+    if (status === 'paylater') document.getElementById('chipPayLater')?.classList.add('active');
+    if (status === 'approved') document.getElementById('chipApproved')?.classList.add('active');
+
+    renderModalSearchResults();
+  }
+
+  function searchRegistrationsModal() {
+    renderModalSearchResults();
+  }
+
+  function renderModalSearchResults() {
+    const container = document.getElementById("modalSearchResultsContainer");
+    const countElem = document.getElementById("modalRegistrantsCount");
+    const keyword = (document.getElementById("modalSearchKeyword")?.value || '').trim().toLowerCase();
+
+    if (!container) return;
+
+    let filtered = globalRegistrantsData.filter(item => {
+      let matchKw = true;
+      if (keyword) {
+        matchKw = (item.fullName && item.fullName.toLowerCase().includes(keyword)) ||
+                  (item.phoneMasked && item.phoneMasked.toLowerCase().includes(keyword)) ||
+                  (item.packageSelected && item.packageSelected.toLowerCase().includes(keyword)) ||
+                  (item.mainShirtSize && item.mainShirtSize.toLowerCase().includes(keyword)) ||
+                  (item.memberStatus && item.memberStatus.toLowerCase().includes(keyword));
+      }
+
+      let matchStatus = true;
+      const pStatus = item.paymentStatus || '';
+      if (currentStatusFilter === 'pending') {
+        matchStatus = pStatus.includes('รอตรวจสอบ');
+      } else if (currentStatusFilter === 'paylater') {
+        matchStatus = pStatus.includes('ไว้ชำระเงินทีหลัง');
+      } else if (currentStatusFilter === 'approved') {
+        matchStatus = pStatus.includes('อนุมัติ') || pStatus.includes('เรียบร้อย') || pStatus.includes('ชำระแล้ว');
+      }
+
+      return matchKw && matchStatus;
+    });
+
+    if (countElem) {
+      countElem.innerHTML = `<i class="fa-solid fa-list-check"></i> แสดง <strong>${filtered.length}</strong> รายการ (จากทั้งหมด ${globalRegistrantsData.length} รายการใน Google Sheets)`;
+    }
+
+    if (filtered.length > 0) {
+      container.innerHTML = filtered.map((item, idx) => {
+        let statusClass = "rgba(34,197,94,0.18)";
+        let statusBorder = "var(--accent-green)";
+        let statusColor = "var(--accent-green)";
+        let statusIcon = "fa-circle-check";
+
+        const pStatus = item.paymentStatus || '';
+        if (pStatus.includes('ไว้ชำระเงินทีหลัง')) {
+          statusClass = "rgba(245,158,11,0.18)";
+          statusBorder = "#f59e0b";
+          statusColor = "#f59e0b";
+          statusIcon = "fa-clock";
+        }
+
+        return `
+          <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 14px; padding: 16px; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.25);">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed rgba(255,255,255,0.12); padding-bottom: 10px; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+              <span style="font-weight: 700; font-size: 1.08rem; color: #fff; font-family:'Prompt';">
+                ${idx + 1}. ${item.fullName}
+              </span>
+              <span style="background: ${statusClass}; border: 1px solid ${statusBorder}; color: ${statusColor}; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">
+                <i class="fa-solid ${statusIcon}"></i> ${item.paymentStatus}
+              </span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; font-size: 0.88rem; color: #cbd5e1;">
+              <div><strong style="color:var(--text-muted);">เบอร์โทร:</strong> ${item.phoneMasked || '-'}</div>
+              <div><strong style="color:var(--text-muted);">สถานะ:</strong> ${item.memberStatus || '-'}</div>
+              <div><strong style="color:var(--text-muted);">แพ็กเกจ:</strong> ${item.packageSelected || '-'}</div>
+              <div><strong style="color:var(--text-muted);">ไซส์เสื้อหลัก:</strong> <span style="color:var(--primary-gold); font-weight:700;">${item.mainShirtSize || '-'}</span></div>
+              <div><strong style="color:var(--text-muted);">ผู้ติดตาม:</strong> ${item.followerCount || 0} คน (${item.followerRoom || 'ไม่รับห้องพัก'})</div>
+              <div><strong style="color:var(--text-muted);">เสื้อสั่งเพิ่ม:</strong> ${item.extraShirts || 'ไม่มี'}</div>
+              <div><strong style="color:var(--text-muted);">ยอดชำระเงิน:</strong> <span style="color:var(--accent-green); font-weight:700; font-size: 0.98rem;">${(item.totalAmount || 0).toLocaleString()} บาท</span></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    } else {
+      container.innerHTML = `
+        <div style="text-align: center; padding: 35px 20px; color: var(--text-muted);">
+          <i class="fa-regular fa-folder-open fa-2x"></i>
+          <p style="margin-top: 10px;">ไม่พบข้อมูลรายชื่อตามคำค้นหา/เงื่อนไขที่เลือก</p>
+        </div>
+      `;
+    }
+  }
+
+  // Search Registration Status Function (In-page)
+  function searchRegistrations() {
+    const keyword = document.getElementById("searchKeyword").value.trim();
+    const container = document.getElementById("searchResultsContainer");
+
+    container.innerHTML = `<div style="text-align: center; padding: 20px; color: var(--primary-gold);"><i class="fa-solid fa-spinner fa-spin fa-2x"></i><p style="margin-top: 10px;">กำลังค้นหาข้อมูลจาก Google Sheets...</p></div>`;
+
+    fetch(SCRIPT_URL + "?action=search&keyword=" + encodeURIComponent(keyword))
+      .then(res => res.json())
+      .then(res => {
+        if (res.status === "success" && res.data && res.data.length > 0) {
+          container.innerHTML = res.data.map((item, idx) => `
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 12px; padding: 15px; margin-bottom: 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 8px; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+                <span style="font-weight: 700; font-size: 1.05rem; color: #fff;">${idx + 1}. ${item.fullName}</span>
+                <span style="background: rgba(34,197,94,0.2); border: 1px solid var(--accent-green); color: var(--accent-green); padding: 3px 10px; border-radius: 12px; font-size: 0.78rem;">
+                  <i class="fa-solid fa-circle-check"></i> ${item.paymentStatus}
+                </span>
+              </div>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px; font-size: 0.88rem; color: #cbd5e1;">
+                <div><strong style="color:var(--text-muted);">เบอร์โทร:</strong> ${item.phoneMasked}</div>
+                <div><strong style="color:var(--text-muted);">สถานะ:</strong> ${item.memberStatus}</div>
+                <div><strong style="color:var(--text-muted);">แพ็กเกจ:</strong> ${item.packageSelected}</div>
+                <div><strong style="color:var(--text-muted);">ไซส์เสื้อหลัก:</strong> <span style="color:var(--primary-gold); font-weight:700;">${item.mainShirtSize}</span></div>
+                <div><strong style="color:var(--text-muted);">ผู้ติดตาม:</strong> ${item.followerCount} คน (${item.followerRoom})</div>
+                <div><strong style="color:var(--text-muted);">เสื้อสั่งเพิ่ม:</strong> ${item.extraShirts}</div>
+                <div><strong style="color:var(--text-muted);">ยอดชำระเงิน:</strong> <span style="color:var(--accent-green); font-weight:700;">${(item.totalAmount || 0).toLocaleString()} บาท</span></div>
+              </div>
+            </div>
+          `).join('');
+        } else {
+          container.innerHTML = `
+            <div style="text-align: center; padding: 20px; color: var(--text-muted);">
+              <i class="fa-regular fa-folder-open fa-2x"></i>
+              <p style="margin-top: 10px;">ไม่พบข้อมูลรายชื่อที่ลงทะเบียนตามคำค้นหา</p>
+              <button type="button" class="btn-copy" style="margin-top: 10px; background: var(--gold-metallic); color: #000; font-weight: 700; border: none; padding: 8px 16px;" onclick="openRegistrantsModal('${keyword}')">
+                <i class="fa-solid fa-window-restore"></i> เปิดดูทั้งหมดแบบ Popup
+              </button>
+            </div>
+          `;
+        }
+      })
+      .catch(err => {
+        container.innerHTML = `<div style="text-align: center; padding: 20px; color: var(--accent-red);"><i class="fa-solid fa-triangle-exclamation fa-2x"></i><p style="margin-top: 10px;">เกิดข้อผิดพลาดในการดึงข้อมูลจากระบบ</p></div>`;
+      });
+  }
+
+  // AI Chat Assistant Functions
+  let chatHistory = [];
+
+  function toggleChatBox() {
+    const box = document.getElementById("aiChatBox");
+    box.classList.toggle("open");
+    if (box.classList.contains("open")) {
+      document.getElementById("aiChatInput").focus();
+    }
+  }
+
+  function sendQuickQuestion(text) {
+    document.getElementById("aiChatInput").value = text;
+    sendChatMessage();
+  }
+
+  async function sendChatMessage() {
+    const input = document.getElementById("aiChatInput");
+    const message = input.value.trim();
+    if (!message) return;
+
+    input.value = "";
+    appendChatMessage("user", message);
+
+    chatHistory.push({ role: "user", content: message });
+    if (chatHistory.length > 10) chatHistory = chatHistory.slice(-10);
+
+    const typingId = showTypingIndicator();
+
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: message, history: chatHistory.slice(0, -1) })
+      });
+
+      removeTypingIndicator(typingId);
+
+      const data = await response.json();
+      if (data.status === "success" && data.reply) {
+        appendChatMessage("bot", data.reply);
+        chatHistory.push({ role: "model", content: data.reply });
+      } else {
+        appendChatMessage("bot", data.message || "ขออภัยครับ เกิดข้อผิดพลาด ไม่สามารถตอบคำถามได้ในขณะนี้");
+      }
+    } catch (err) {
+      removeTypingIndicator(typingId);
+      appendChatMessage("bot", "ขออภัยครับ ระบบเชื่อมต่อขัดข้อง กรุณาลองใหม่อีกครั้ง");
+    }
+  }
+
+  function appendChatMessage(sender, text) {
+    const container = document.getElementById("aiChatMessages");
+    const msgDiv = document.createElement("div");
+    msgDiv.className = `chat-msg ${sender}`;
+
+    const icon = sender === "bot" ? '<i class="fa-solid fa-robot"></i>' : '<i class="fa-solid fa-user"></i>';
+    const formattedText = text.replace(/\n/g, '<br>');
+
+    msgDiv.innerHTML = `
+      <div class="chat-avatar">${icon}</div>
+      <div class="chat-bubble">${formattedText}</div>
+    `;
+
+    container.appendChild(msgDiv);
+    container.scrollTop = container.scrollHeight;
+  }
+
+  function showTypingIndicator() {
+    const container = document.getElementById("aiChatMessages");
+    const typingDiv = document.createElement("div");
+    typingDiv.className = "chat-msg bot";
+    const id = "typing-" + Date.now();
+    typingDiv.id = id;
+    typingDiv.innerHTML = `
+      <div class="chat-avatar"><i class="fa-solid fa-robot"></i></div>
+      <div class="chat-bubble">
+        <div class="chat-typing">
+          <span class="chat-typing-dot"></span>
+          <span class="chat-typing-dot"></span>
+          <span class="chat-typing-dot"></span>
+        </div>
+      </div>
+    `;
+    container.appendChild(typingDiv);
+    container.scrollTop = container.scrollHeight;
+    return id;
+  }
+
+  function removeTypingIndicator(id) {
+    const el = document.getElementById(id);
+    if (el) el.remove();
+  }
+
+  // Global Keyboard & Backdrop Event Listeners for Modals & Lightbox
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+      const chatBox = document.getElementById('aiChatBox');
+      if (chatBox && chatBox.classList.contains('open')) {
+        chatBox.classList.remove('open');
+      }
+    }
+  });
+
+  window.addEventListener('click', (e) => {
+    if (e.target.classList.contains('modal')) {
+      e.target.style.display = 'none';
+    }
+  });
+</script>
+
+<!-- Mobile Bottom Navigation Bar -->
+<nav class="mobile-bottom-nav">
+  <a class="nav-item active" data-target="sec-info" onclick="switchNav(this, 'sec-info')">
+    <i class="fa-solid fa-house"></i>
+    <span>หน้าแรก</span>
+  </a>
+  <a class="nav-item" data-target="sec-register" onclick="switchNav(this, 'sec-register')">
+    <i class="fa-solid fa-pen-to-square"></i>
+    <span>ลงทะเบียน</span>
+  </a>
+  <a class="nav-item" data-target="sec-size" onclick="openSizeChartModal(); switchNav(this)">
+    <i class="fa-solid fa-shirt"></i>
+    <span>ตารางไซส์</span>
+  </a>
+  <a class="nav-item" data-target="sec-payment" onclick="switchNav(this, 'sec-payment')">
+    <i class="fa-solid fa-wallet"></i>
+    <span>ชำระเงิน</span>
+  </a>
+  <a class="nav-item" data-target="sec-check" onclick="openRegistrantsModal(); switchNav(this, 'sec-check')">
+    <i class="fa-solid fa-user-check"></i>
+    <span>เช็กรายชื่อ</span>
+  </a>
+</nav>
+
+</body>
+</html>

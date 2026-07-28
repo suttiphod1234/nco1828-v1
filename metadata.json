@@ -1,0 +1,6 @@
+{
+  "name": "NCO 1828 Reunion Booking System",
+  "description": "ระบบลงทะเบียนงานเลี้ยงรุ่น NCO.1828 เหล่าทหารปืนใหญ่",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
