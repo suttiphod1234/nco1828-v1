@@ -99,6 +99,19 @@ function doGet(e) {
     }
   }
 
+  // Handle AI Chat API
+  if (action === "chat") {
+    try {
+      const msg = e.parameter ? (e.parameter.message || "").trim() : "";
+      const reply = getAIChatReply(msg);
+      return ContentService.createTextOutput(JSON.stringify({ status: "success", reply: reply }))
+        .setMimeType(ContentService.MimeType.JSON);
+    } catch (err) {
+      return ContentService.createTextOutput(JSON.stringify({ status: "error", message: err.toString() }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+  }
+
   // Default Web App HTML output
   try {
     return HtmlService.createHtmlOutputFromFile('index')
@@ -272,4 +285,49 @@ function doPost(e) {
   } finally {
     lock.releaseLock();
   }
+}
+
+function getAIChatReply(msg) {
+  const apiKey = PropertiesService.getScriptProperties().getProperty("GEMINI_API_KEY");
+  if (apiKey) {
+    try {
+      const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + apiKey;
+      const systemPrompt = "คุณคือผู้ช่วย AI อัตโนมัติประจำงานเลี้ยงรุ่น NCO.1828 เหล่าทหารปืนใหญ่ ตอบด้วยภาษาไทยสุภาพ เป็นกันเอง...";
+      const payload = {
+        contents: [{ role: "user", parts: [{ text: msg }] }],
+        systemInstruction: { parts: [{ text: systemPrompt }] }
+      };
+      const options = {
+        method: "post",
+        contentType: "application/json",
+        payload: JSON.stringify(payload),
+        muteHttpExceptions: true
+      };
+      const res = UrlFetchApp.fetch(url, options);
+      const json = JSON.parse(res.getContentText());
+      if (json.candidates && json.candidates[0] && json.candidates[0].content) {
+        return json.candidates[0].content.parts[0].text;
+      }
+    } catch (e) {
+      Logger.log("Gemini API Error: " + e.toString());
+    }
+  }
+  return getLocalNCO1828Reply(msg);
+}
+
+function getLocalNCO1828Reply(msg) {
+  const q = (msg || "").toLowerCase();
+  if (q.includes("ราคา") || q.includes("เท่าไหร่") || q.includes("กี่บาท") || q.includes("แพ็กเกจ") || q.includes("ค่าลงทะเบียน")) {
+    return "🎖️ อัตราค่าลงทะเบียนงานเลี้ยงรุ่น NCO.1828:\n- สมาชิก 1 ท่าน (ไม่รับห้อง): 800 บาท\n- สมาชิก 2 ท่าน (ไม่รับห้อง): 1,000 บาท\n- สมาชิก 1 ท่าน (รวมห้องพัก): 1,300 บาท\n- สมาชิก 2 ท่าน (รวมห้องพัก): 1,500 บาท\n- ผู้ไม่ได้เป็นสมาชิก: 1,500 บาท (1 ท่าน) / 2,000 บาท (2 ท่าน)";
+  }
+  if (q.includes("เสื้อ") || q.includes("ไซส์")) {
+    return "👕 เสื้อโปโล WARRIX 1828 สมาชิกรับฟรี 1 ตัว สั่งซื้อเพิ่มตัวละ 330 บาท (XS-3L) และ 400 บาท (5L, 7L)";
+  }
+  if (q.includes("โอน") || q.includes("บัญชี") || q.includes("ธนาคาร")) {
+    return "💳 ธนาคารไทยพาณิชย์ (SCB) เลขที่บัญชี 560-286-0945 ชื่อบัญชี ร.ต.วันชัย มีชาญ";
+  }
+  if (q.includes("สถานที่") || q.includes("โรงแรม") || q.includes("วันไหน")) {
+    return "📅 งานจัดวันศุกร์ที่ 19 กุมภาพันธ์ 2570 ณ โรงแรมโตเกียว จ.ลพบุรี";
+  }
+  return "สวัสดีครับเพื่อน NCO.1828! สอบถามเรื่องค่าลงทะเบียน ไซส์เสื้อ เลขบัญชีโอนเงิน หรือสถานที่จัดงานได้เลยครับ (โทร 089-208-1550 ร.ต.วันชัย มีชาญ)";
 }

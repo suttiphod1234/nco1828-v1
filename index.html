@@ -2426,26 +2426,112 @@
 
     const typingId = showTypingIndicator();
 
+    // 1. Try Express backend endpoint (/api/chat)
     try {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: message, history: chatHistory.slice(0, -1) })
       });
-
-      removeTypingIndicator(typingId);
-
-      const data = await response.json();
-      if (data.status === "success" && data.reply) {
-        appendChatMessage("bot", data.reply);
-        chatHistory.push({ role: "model", content: data.reply });
-      } else {
-        appendChatMessage("bot", data.message || "ขออภัยครับ เกิดข้อผิดพลาด ไม่สามารถตอบคำถามได้ในขณะนี้");
+      if (response.ok) {
+        const data = await response.json();
+        if (data.status === "success" && data.reply) {
+          removeTypingIndicator(typingId);
+          appendChatMessage("bot", data.reply);
+          chatHistory.push({ role: "model", content: data.reply });
+          return;
+        }
       }
     } catch (err) {
-      removeTypingIndicator(typingId);
-      appendChatMessage("bot", "ขออภัยครับ ระบบเชื่อมต่อขัดข้อง กรุณาลองใหม่อีกครั้ง");
+      // Continue to next fallback
     }
+
+    // 2. Try Google Apps Script SCRIPT_URL API (action=chat)
+    if (typeof SCRIPT_URL === "string" && SCRIPT_URL.startsWith("http")) {
+      try {
+        const gasUrl = SCRIPT_URL + "?action=chat&message=" + encodeURIComponent(message);
+        const response = await fetch(gasUrl);
+        if (response.ok) {
+          const data = await response.json();
+          if (data.status === "success" && data.reply) {
+            removeTypingIndicator(typingId);
+            appendChatMessage("bot", data.reply);
+            chatHistory.push({ role: "model", content: data.reply });
+            return;
+          }
+        }
+      } catch (err) {
+        // Continue to fallback
+      }
+    }
+
+    // 3. Fallback to Built-in AI Studio Knowledge Engine
+    setTimeout(() => {
+      removeTypingIndicator(typingId);
+      const reply = getClientNCO1828AIReply(message);
+      appendChatMessage("bot", reply);
+      chatHistory.push({ role: "model", content: reply });
+    }, 400);
+  }
+
+  function getClientNCO1828AIReply(msg) {
+    const q = msg.toLowerCase();
+
+    if (q.includes("ราคา") || q.includes("เท่าไหร่") || q.includes("กี่บาท") || q.includes("แพ็กเกจ") || q.includes("ค่าลงทะเบียน") || q.includes("ค่าร่วมงาน") || q.includes("จ่าย")) {
+      return "🎖️ <b>อัตราค่าลงทะเบียนงานเลี้ยงรุ่น NCO.1828</b><br><br>" +
+             "<b>สำหรับสมาชิก 1828:</b><br>" +
+             "• คนเดียว (ไม่เอาห้องพัก): 800 บาท<br>" +
+             "• 2 คน (ไม่เอาห้องพัก): 1,000 บาท<br>" +
+             "• คนเดียว (พร้อมห้องพัก): 1,300 บาท (รวมห้องพัก 1 ห้อง)<br>" +
+             "• 2 คน (พร้อมห้องพัก): 1,500 บาท (รวมห้องพัก 1 ห้อง)<br><br>" +
+             "<b>สำหรับผู้ไม่ได้เป็นสมาชิก:</b><br>" +
+             "• คนเดียว: 1,500 บาท | 2 คน: 2,000 บาท<br><br>" +
+             "<b>ผู้ติดตามเพิ่มเติม:</b> 200 บาท (ไม่รับห้อง) / 400 บาท (พร้อมห้องพัก)";
+    }
+
+    if (q.includes("เสื้อ") || q.includes("ไซส์") || q.includes("ขนาด") || q.includes("รอบอก") || q.includes("สั่งเพิ่ม")) {
+      return "👕 <b>รายละเอียดเสื้อโปโล WARRIX 1828 Artillery</b><br><br>" +
+             "• สมาชิกรับฟรี 1 ตัว ตามแพ็กเกจที่เลือก<br>" +
+             "• สั่งซื้อเพิ่ม (XS - 3L / อก 36\" - 48\"): ตัวละ 330 บาท<br>" +
+             "• สั่งซื้อเพิ่มไซส์พิเศษ (5L / อก 52\", 7L / อก 56\"): ตัวละ 400 บาท<br>" +
+             "👉 สามารถกดดูตารางขนาดไซส์เสื้อได้ที่เมนู 'ตารางไซส์' ด้านล่างครับ";
+    }
+
+    if (q.includes("โอน") || q.includes("บัญชี") || q.includes("ธนาคาร") || q.includes("ชำระ") || q.includes("สลิป")) {
+      return "💳 <b>ช่องทางการโอนเงินชำระค่าลงทะเบียน</b><br><br>" +
+             "• <b>ธนาคาร:</b> ไทยพาณิชย์ (SCB)<br>" +
+             "• <b>เลขที่บัญชี:</b> 560-286-0945<br>" +
+             "• <b>ชื่อบัญชี:</b> ร.ต.วันชัย มีชาญ<br><br>" +
+             "📌 สามารถเลือกโอนเงินทันทีพร้อมแนบสลิป หรือเลือก 'ไว้ชำระเงินทีหลัง' แล้วค่อยโอนก่อน 31 ธ.ค. 2569 ได้ครับ";
+    }
+
+    if (q.includes("ที่ไหน") || q.includes("สถานที่") || q.includes("โรงแรมน") || q.includes("วันไหน") || q.includes("กุมภาพันธ์") || q.includes("เมื่อไหร่") || q.includes("จัดที่")) {
+      return "📅 <b>กำหนดการจัดงานเลี้ยงรุ่น NCO.1828</b><br><br>" +
+             "• <b>วันจัดงาน:</b> วันศุกร์ที่ 19 กุมภาพันธ์ 2570<br>" +
+             "• <b>สถานที่:</b> ณ โรงแรมโตเกียว จ.ลพบุรี<br>" +
+             "• <b>ธีมงาน:</b> แต่งชุดไทย ร่วมสัมผัสบรรยากาศงานแผ่นดินสมเด็จพระนารายณ์<br>" +
+             "🎁 สิทธิ์พิเศษ: 50 ท่านแรกที่โอนเงินลงทะเบียน รับฟรีพวงกุญแจ 1828 ลายกระสุน/ระเบิด!";
+    }
+
+    if (q.includes("ห้อง") || q.includes("ที่พัก") || q.includes("โรงแรม")) {
+      return "🏨 <b>รายละเอียดห้องพักโรงแรมโตเกียว</b><br><br>" +
+             "• แพ็กเกจสมาชิกพร้อมห้องพัก (1,300 บาท สำหรับ 1 ท่าน / 1,500 บาท สำหรับ 2 ท่าน) รวมห้องพัก 1 ห้องเรียบร้อยแล้ว<br>" +
+             "• หากมีผู้ติดตามต้องการเพิ่มห้องพัก คิดเพิ่มเพียง 400 บาท/คน";
+    }
+
+    if (q.includes("ติดต่อ") || q.includes("โทร") || q.includes("เบอร์") || q.includes("ผู้จัด")) {
+      return "📞 <b>สอบถามข้อมูลเพิ่มเติมกับคณะผู้จัดงาน</b><br><br>" +
+             "• <b>ร.ต.วันชัย มีชาญ:</b> โทร 089-208-1550<br>" +
+             "ยินดีต้อนรับเพื่อนๆ NCO.1828 ทุกท่านครับ!";
+    }
+
+    return "สวัสดีครับเพื่อน NCO.1828! 🎖️ ยินดีต้อนรับครับ<br><br>" +
+           "คุณสามารถสอบถามเกี่ยวกับ:<br>" +
+           "• <b>ค่าลงทะเบียน & แพ็กเกจ</b><br>" +
+           "• <b>ไซส์เสื้อ & การสั่งซื้อเสื้อเพิ่ม</b><br>" +
+           "• <b>เลขบัญชีโอนเงิน</b><br>" +
+           "• <b>วันและสถานที่จัดงาน (โรงแรมโตเกียว ลพบุรี)</b><br><br>" +
+           "หรือติดต่อ ร.ต.วันชัย มีชาญ โทร 089-208-1550 ได้เลยครับ!";
   }
 
   function appendChatMessage(sender, text) {
