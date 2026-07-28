@@ -1716,7 +1716,12 @@
         <i class="fa-solid fa-robot"></i>
       </div>
       <div>
-        <div>ผู้ช่วย AI NCO.1828</div>
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <span>ผู้ช่วย AI NCO.1828</span>
+          <a href="https://ais-dev-fptd5pqg26e5nwsjqx67ka-760953218776.asia-east1.run.app/chat.html" target="_blank" style="font-size:0.7rem; padding: 2px 7px; border-radius: 12px; background: rgba(212,175,55,0.25); border: 1px solid var(--primary-gold); color: var(--primary-gold); text-decoration: none; font-weight: 600;" title="เปิดระบบแชทในหน้าต่างใหม่">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> แอปแชท
+          </a>
+        </div>
         <div class="ai-chat-status">
           <span class="ai-chat-status-dot"></span> พร้อมตอบคำถาม 24 ชม.
         </div>
@@ -1724,13 +1729,29 @@
     </div>
     <button class="ai-chat-close" onclick="toggleChatBox()">&times;</button>
   </div>
-  <iframe 
-    src="https://ais-dev-fptd5pqg26e5nwsjqx67ka-760953218776.asia-east1.run.app/chat.html" 
-    width="100%" 
-    height="100%" 
-    style="border: none; flex: 1; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; background: transparent;"
-    title="AI Assistant Chat">
-  </iframe>
+
+  <div class="ai-chat-quick-chips">
+    <span class="ai-chip" onclick="sendQuickQuestion('ค่าลงทะเบียนกี่บาท?')">💰 ค่าลงทะเบียน</span>
+    <span class="ai-chip" onclick="sendQuickQuestion('มีห้องพักให้ไหม?')">🏨 ห้องพัก</span>
+    <span class="ai-chip" onclick="sendQuickQuestion('ขอตารางไซส์เสื้อโปโล')">👕 ไซส์เสื้อ</span>
+    <span class="ai-chip" onclick="sendQuickQuestion('โอนเงินเข้าบัญชีไหน?')">💳 บัญชีโอนเงิน</span>
+    <span class="ai-chip" onclick="sendQuickQuestion('ไม่ได้เป็นสมาชิกเข้าร่วมงานได้ไหม?')">👥 ไม่ใช่สมาชิก</span>
+  </div>
+
+  <div id="aiChatMessages" class="ai-chat-messages">
+    <!-- Initial Bot Welcome Message -->
+    <div class="chat-msg bot">
+      <div class="chat-avatar"><i class="fa-solid fa-robot"></i></div>
+      <div class="chat-bubble">
+        สวัสดีครับเพื่อน NCO.1828! 🎖️ มีข้อสงสัยเรื่องการลงทะเบียน งานเลี้ยงรุ่น เสื้อโปโล หรือห้องพัก สอบถามผมได้เลยครับ!
+      </div>
+    </div>
+  </div>
+
+  <div class="ai-chat-input-container">
+    <input type="text" id="aiChatInput" class="ai-chat-input" placeholder="พิมพ์ข้อความสอบถามที่นี่..." onkeyup="if(event.key==='Enter') sendChatMessage()">
+    <button class="ai-chat-send" onclick="sendChatMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+  </div>
 </div>
 
 <script>
@@ -2418,8 +2439,11 @@
 
   function toggleChatBox() {
     const box = document.getElementById("aiChatBox");
-    if (box) {
-      box.classList.toggle("open");
+    if (!box) return;
+    box.classList.toggle("open");
+    if (box.classList.contains("open")) {
+      const input = document.getElementById("aiChatInput");
+      if (input) setTimeout(() => input.focus(), 150);
     }
   }
 
